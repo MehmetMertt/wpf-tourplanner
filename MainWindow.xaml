@@ -4,9 +4,48 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:tour_planner"
+        xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Routenplanner" Height="450" Width="800"
+>
     <Grid>
+        <DockPanel>
+                <TextBox DockPanel.Dock="Top" Margin="5"/>
 
-    </Grid>
-</Window>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="8*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="5">
+                        <TextBlock Text="Routen" FontWeight="Bold" />
+                        <ListBox Name="lstRoutes" SelectionChanged="lstRoutes_SelectionChanged">
+                            <ListBoxItem Content="Wien Tour" />
+                            <ListBoxItem Content="NÖ Tour" />
+                            <ListBoxItem Content="Favoriten Tour" />
+                            <ListBoxItem Content="Sestadt Tour" />
+                        </ListBox>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="5">
+
+
+                    <Border Height="200" Background="LightGray" Margin="5">
+                        <gmaps:GMapControl x:Name="mapView" Loaded="mapView_Loaded" />
+                    </Border>
+
+                        <TextBlock Text="Tour Daten" FontWeight="Bold" Margin="5"/>
+                        <DataGrid Name="datagrid" AutoGenerateColumns="False" HeadersVisibility="Column">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Datum" Binding="{Binding Date}" Width="*"/>
+                                <DataGridTextColumn Header="Wie lange" Binding="{Binding Duration}" Width="*"/>
+                                <DataGridTextColumn Header="Wie weit" Binding="{Binding Distance}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Grid>
+            </DockPanel>
+        </Grid>
+    </Window>
