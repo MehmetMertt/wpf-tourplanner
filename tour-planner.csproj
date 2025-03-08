@@ -10,7 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Ressources\maximize.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GMap.NET.WinPresentation" Version="2.1.7" />
+    <PackageReference Include="SVGImage" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Ressources\maximize.svg" />
   </ItemGroup>
 
 </Project>

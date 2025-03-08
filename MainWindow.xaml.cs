@@ -13,7 +13,8 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
 using System;
 using System.Collections.Generic;
-
+using System.Runtime.InteropServices;
+using tour_planner.ViewModel;
 
 
 namespace tour_planner
@@ -26,8 +27,38 @@ namespace tour_planner
         public MainWindow()
         {
             InitializeComponent();
+            RouteViewModel routeViewModel = new RouteViewModel();
+            this.DataContext = routeViewModel;
         }
 
+
+        // https://stackoverflow.com/questions/13930633/in-wpf-can-i-have-a-borderless-window-that-has-regular-minimize-maximise-and-c
+        #region ControlButtons
+        private void CommandBinding_CanExecute_1(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void CommandBinding_Executed_1(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.CloseWindow(this);
+        }
+
+        private void CommandBinding_Executed_2(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.MaximizeWindow(this);
+        }
+
+        private void CommandBinding_Executed_3(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+
+        private void DragWindow(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.DragMove(); // Enables window dragging
+        }
+        #endregion
 
         private void mapView_Loaded(object sender, RoutedEventArgs e)
         {
@@ -44,11 +75,13 @@ namespace tour_planner
 
         private void lstRoutes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            /*
             if (lstRoutes.SelectedItem is ListBoxItem selectedItem)
             {
                 string selectedRoute = selectedItem.Content.ToString();
                 UpdateRoute(selectedRoute);
             }
+            */
         }
 
         private void UpdateRoute(string routeName)
