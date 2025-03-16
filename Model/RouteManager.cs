@@ -12,22 +12,10 @@ namespace tour_planner.Model
     {
         public static ObservableCollection<Route> _DatabaseRoute = new ObservableCollection<Route>()
         {
-            new Route()
-            {
-                Name = "Wienerwald"
-            },
-            new Route()
-            {
-                Name = "Dopplerhütte"
-            }, 
-            new Route()
-            {
-                Name = "Figlwarte"
-            },
-            new Route()
-            {
-                Name = "Dorfrunde"
-            }
+            new Route("Wienerwald"),
+            new Route("Dopplerhütte"),
+            new Route("Figlwarte"),
+            new Route("Dorfrunde")
         };
 
         public static ObservableCollection<Route> getRoutes()

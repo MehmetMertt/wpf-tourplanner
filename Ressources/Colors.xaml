@@ -8,5 +8,10 @@
 	
 	<Color x:Key="AccentColor">#7058fc</Color>
 	<SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
-	
+
+	<Color x:Key="TextColor">#FFFFFF</Color>
+	<SolidColorBrush x:Key="TextColorBrush" Color="{StaticResource TextColor}" />
+
+
+
 </ResourceDictionary>
