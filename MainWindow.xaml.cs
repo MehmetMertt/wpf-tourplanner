@@ -15,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using tour_planner.ViewModel;
-
+using System.Text.RegularExpressions;
 
 namespace tour_planner
 {
@@ -72,6 +72,26 @@ namespace tour_planner
             mapView.DragButton = MouseButton.Left;
         }
 
+        private void RegexDate_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // regex that allows only date in this format: DD.MM.YYYY, D.M.YYYY, DD.M.YYYY, D.MM.YYYY
+            Regex regex = new Regex("^(0?[1-9]|[12][0-9]|3[01])\\.(0?[1-9]|1[0-2])\\.\\d{4}$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void RegexDuration_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // regex that allows only duration in this format: DD.MM.YYYY, D.M.YYYY, DD.M.YYYY, D.MM.YYYY
+            Regex regex = new Regex("^([01]?\\d|2[0-3]):[0-5]\\d:[0-5]\\d$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void RegexDistance_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // regex that allows only distance in this format: numbers + optional komma followed by min 1 number and max 2 numbers + km or m at the end
+            Regex regex = new Regex("^\\d+(,\\d{1,2})?\\s?(km|Km|KM|kM|m|M)$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
 
         private void lstRoutes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -83,17 +103,17 @@ namespace tour_planner
             }
             */
         }
-
+        /*
         private void UpdateRoute(string routeName)
         {
-            List<TourData> tourData = new List<TourData>();
+            List<Route> tourData = new List<Route>();
             mapView.Markers.Clear();
 
             switch (routeName)
             {
                 case "Wien Tour":
                     mapView.Position = new PointLatLng(48.2082, 16.3738);
-                    tourData.Add(new TourData { Date = "24.02.2025", Duration = "2h", Distance = "15 km" });
+                    tourData.Add(new Route { Date = "24.02.2025", Duration = "2h", Distance = "15 km" });
 
                     AddMarker(48.2082, 16.3738, "Start - Stephansplatz");
                     AddMarker(48.2064, 16.3701, "Stop 1 - Karlskirche");
@@ -102,7 +122,7 @@ namespace tour_planner
 
                 case "NÖ Tour":
                     mapView.Position = new PointLatLng(48.3031, 16.2476);
-                    tourData.Add(new TourData { Date = "25.02.2025", Duration = "3h", Distance = "25 km" });
+                    tourData.Add(new Route { Date = "25.02.2025", Duration = "3h", Distance = "25 km" });
 
                     AddMarker(48.3031, 16.2476, "Start - Klosterneuburg");
                     AddMarker(48.2976, 16.2214, "Stop 1 - Stift Heiligenkreuz");
@@ -111,7 +131,7 @@ namespace tour_planner
 
                 case "Favoriten Tour":
                     mapView.Position = new PointLatLng(48.1702, 16.3635);
-                    tourData.Add(new TourData { Date = "26.02.2025", Duration = "1.5h", Distance = "10 km" });
+                    tourData.Add(new Route { Date = "26.02.2025", Duration = "1.5h", Distance = "10 km" });
 
                     AddMarker(48.1702, 16.3635, "Start - Hauptbahnhof");
                     AddMarker(48.1680, 16.3690, "Stop 1 - Böhmischer Prater");
@@ -119,7 +139,7 @@ namespace tour_planner
 
                 case "Sestadt Tour":
                     mapView.Position = new PointLatLng(48.2653, 16.5116);
-                    tourData.Add(new TourData { Date = "27.02.2025", Duration = "2h", Distance = "12 km" });
+                    tourData.Add(new Route { Date = "27.02.2025", Duration = "2h", Distance = "12 km" });
 
                     AddMarker(48.2653, 16.5116, "Start - Seestadt Aspern");
                     AddMarker(48.2615, 16.5069, "Stop 1 - TechGate Vienna");
@@ -143,13 +163,6 @@ namespace tour_planner
             };
             mapView.Markers.Add(marker);
         }
-
-    }
-
-    public class TourData
-    {
-        public string Date { get; set; }
-        public string Duration { get; set; }
-        public string Distance { get; set; }
+        */
     }
 }
