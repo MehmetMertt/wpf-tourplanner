@@ -17,7 +17,7 @@ namespace tour_planner.Model
         // public string Description { get; set; }
         public List<Route> Routes { get; set; } = new List<Route>(); // a tour can have multiple routes
 
-        public Tour(string name = "New Tour", string date = "DD.MM.YYYY", string duration = "0", double distance = 0)
+        public Tour(string name = "New Tour", string date = "DD.MM.YYYY", string duration = "0", float distance = 0f)
         {
             // constructor:
             Name = name;

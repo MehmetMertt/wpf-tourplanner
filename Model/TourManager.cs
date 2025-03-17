@@ -13,8 +13,8 @@ namespace tour_planner.Model
         // attributes:
         public static ObservableCollection<Tour> _DatabaseRoute = new ObservableCollection<Tour>()
         {
-            new Tour("Wienerwald", "01.01.2025", "0",123.123),
-            new Tour("Dopplerhütte", "02.02.2025", "0",  222.22), 
+            new Tour("Wienerwald", "01.01.2025", "0",123.2f),
+            new Tour("Dopplerhütte", "02.02.2025", "0",  223f), 
             new Tour("Figlwarte", "03.03.2025"),
             new Tour("Dorfrunde", "04.04.2025", "0", 1)
         };

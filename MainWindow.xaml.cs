@@ -27,8 +27,8 @@ namespace tour_planner
         public MainWindow()
         {
             InitializeComponent();
-            RouteViewModel routeViewModel = new RouteViewModel();
-            this.DataContext = routeViewModel;
+/*            TourListViewModel routeViewModel = new TourListViewModel();
+            this.DataContext = routeViewModel;*/
         }
 
 
@@ -64,34 +64,16 @@ namespace tour_planner
         {
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
             mapView.MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance;
-            mapView.MinZoom = 2;
+            mapView.MinZoom = 12;
             mapView.MaxZoom = 17;
-            mapView.Position = new PointLatLng(48.239166, 16.377441);
+            mapView.Zoom = 12;
+            mapView.Position = new PointLatLng(48.239166, 16.377441); //technikum wien
             mapView.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             mapView.CanDragMap = true;
             mapView.DragButton = MouseButton.Left;
         }
 
-        private void RegexDate_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            // regex that allows only date in this format: DD.MM.YYYY, D.M.YYYY, DD.M.YYYY, D.MM.YYYY
-            Regex regex = new Regex("^(0?[1-9]|[12][0-9]|3[01])\\.(0?[1-9]|1[0-2])\\.\\d{4}$");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
 
-        private void RegexDuration_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            // regex that allows only duration in this format: DD.MM.YYYY, D.M.YYYY, DD.M.YYYY, D.MM.YYYY
-            Regex regex = new Regex("^([01]?\\d|2[0-3]):[0-5]\\d:[0-5]\\d$");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
-
-        private void RegexDistance_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            // regex that allows only distance in this format: numbers + optional komma followed by min 1 number and max 2 numbers + km or m at the end
-            Regex regex = new Regex("^\\d+(,\\d{1,2})?\\s?(km|Km|KM|kM|m|M)$");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
 
         private void lstRoutes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace tour_planner.View
 {
     /// <summary>
-    /// Interaction logic for Routes.xaml
+    /// Interaction logic for TopBar.xaml
     /// </summary>
-    public partial class Routes : UserControl
+    public partial class TopBar : UserControl
     {
-        public Routes()
+        public TopBar()
         {
             InitializeComponent();
         }
