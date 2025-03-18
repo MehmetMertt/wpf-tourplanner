@@ -10,32 +10,29 @@ namespace tour_planner.Model
 {
     internal class TourManager
     {
-        // attributes:
-        public static ObservableCollection<Tour> _DatabaseRoute = new ObservableCollection<Tour>()
+        public static ObservableCollection<TourModel> _DatabaseRoute = new ObservableCollection<TourModel>()
         {
-            new Tour("Wienerwald", "01.01.2025", "0",123.2f),
-            new Tour("Dopplerhütte", "02.02.2025", "0",  223f), 
-            new Tour("Figlwarte", "03.03.2025"),
-            new Tour("Dorfrunde", "04.04.2025", "0", 1)
+            new TourModel("Wienerwald", "01.01.2025", "0",123.2f),
+            new TourModel("Dopplerhütte", "02.02.2025", "0",  223f), 
+            new TourModel("Figlwarte", "03.03.2025"),
+            new TourModel("Dorfrunde", "04.04.2025", "0", 1)
         };
 
         public TourManager()
         {
-            // constructor ...
         }
 
-        // methods:
-        public static ObservableCollection<Tour> getTours()
+        public static ObservableCollection<TourModel> getTours()
         {
             return _DatabaseRoute;
         }
 
-        public static void AddTour(Tour tour)
+        public static void AddTour(TourModel tour)
         {
             _DatabaseRoute.Add(tour);
         }
 
-        public static void DeleteTour(Tour tour)
+        public static void DeleteTour(TourModel tour)
         {
             _DatabaseRoute.Remove(tour);
         }

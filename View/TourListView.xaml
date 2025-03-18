@@ -34,6 +34,7 @@
         <ListView
             DisplayMemberPath="Name"
             ItemsSource="{Binding Tours}"
+            MouseDoubleClick="ListView_MouseDoubleClick"
             SelectedItem="{Binding SelectedTour}" />
         <!--  SelectionChanged="lstRoutes_SelectionChanged"  -->
     </StackPanel>

@@ -8,14 +8,10 @@ namespace tour_planner.Validation
 {
     class InputValidator
     {
-        // attributes ...
 
         public InputValidator()
         {
-            // conststructor ...
         }
-
-        // methods:
 
         public void validate(string value)
         {

@@ -17,24 +17,15 @@ using tour_planner.ViewModel;
 namespace tour_planner.View
 {
     /// <summary>
-    /// Interaction logic for Routes.xaml
+    /// Interaction logic for TourLogsView.xaml
     /// </summary>
-    public partial class Routes : UserControl
+    public partial class TourLogsView : UserControl
     {
-        public Routes()
+        public TourLogsView()
         {
             InitializeComponent();
-            TourListViewModel routeViewModel = new TourListViewModel();
-            this.DataContext = routeViewModel;
+            TourLogsViewModel tourLogsViewModel = new TourLogsViewModel();
+            this.DataContext = tourLogsViewModel;
         }
-
-        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (DataContext is TourListViewModel viewModel && viewModel.OpenDetailsPage.CanExecute(null))
-            {
-                viewModel.OpenDetailsPage.Execute(null);
-            }
-        }
-
     }
 }

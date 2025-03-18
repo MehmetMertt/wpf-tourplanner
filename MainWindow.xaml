@@ -12,14 +12,16 @@
     Height="450"
     MinWidth="800"
     MinHeight="450"
-    AllowsTransparency="True"
-    Background="Transparent"
-    ResizeMode="CanResizeWithGrip"
     Style="{StaticResource CustomWindowStyle}"
-    WindowStyle="None"
     mc:Ignorable="d">
 
-
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="0"
+            CornerRadius="20"
+            GlassFrameThickness="0"
+            ResizeBorderThickness="4" />
+    </WindowChrome.WindowChrome>
     <!--  Root Layout  -->
 
     <!--  Custom Title Bar  -->
@@ -49,32 +51,7 @@
                     Loaded="mapView_Loaded" />
             </Border>
 
-            <TextBlock
-                Margin="5"
-                FontWeight="Bold"
-                Foreground="White"
-                Text="Tour Data" />
-            <DataGrid
-                Name="datagrid"
-                AutoGenerateColumns="False"
-                HeadersVisibility="Column"
-                ItemsSource="{Binding Tours}"
-                SelectedItem="{Binding SelectedTour, Mode=TwoWay}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn
-                        Width="*"
-                        Binding="{Binding Date}"
-                        Header="Date" />
-                    <DataGridTextColumn
-                        Width="*"
-                        Binding="{Binding TotalDuration}"
-                        Header="Duration" />
-                    <DataGridTextColumn
-                        Width="*"
-                        Binding="{Binding TotalDistance}"
-                        Header="Distance" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <views:TourLogsView />
         </StackPanel>
     </Grid>
 

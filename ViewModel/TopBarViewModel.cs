@@ -37,16 +37,10 @@ namespace tour_planner.ViewModel
 
         public void DoMaximize(object obj)
         {
-            Debug.WriteLine("Maximize");
-            Debug.WriteLine("Maximize");
-
-            Debug.WriteLine("Maximize");
-
             if (_window.WindowState == WindowState.Maximized)
                 _window.WindowState = WindowState.Normal;
             else
                 _window.WindowState = WindowState.Maximized;
-         
         }
 
         public void DoMinimize(object obj)

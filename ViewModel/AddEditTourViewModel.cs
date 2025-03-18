@@ -13,17 +13,30 @@ namespace tour_planner.ViewModel
 {
     class AddEditTourViewModel
     {
-        public Tour Tour { get; set; }
-
+        public TourModel Tour { get; set; }
         public ICommand SaveCommand { get; set; }
+        public ICommand ToggleActionCommand { get; set; }
 
-        public AddEditTourViewModel(Tour tour)
+        public AddEditTourViewModel(TourModel tour, bool _IsActionEnabled = true)
         {
             Tour = tour;
             SaveCommand = new RelayCommand(DoAddTour, CanAddTour);
+            ToggleActionCommand = new RelayCommand((object obj) => IsActionEnabled = !IsActionEnabled, (object obj) => true);
+            IsActionEnabled = _IsActionEnabled;
         }
 
-       private void DoAddTour(object obj)
+
+        private bool _isActionEnabled;
+        public bool IsActionEnabled
+        {
+            get => _isActionEnabled;
+            set
+            {
+                _isActionEnabled = value;
+            }
+        }
+
+        private void DoAddTour(object obj)
         {
             if (obj is System.Windows.Window window)
             {

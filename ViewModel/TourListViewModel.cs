@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
@@ -9,7 +8,7 @@ namespace tour_planner.ViewModel
 {
     internal class TourListViewModel : ViewModelBase
     {
-        public ObservableCollection<Tour> Tours { get; set; } = new ObservableCollection<Tour>(); // to store (reference) all the tours from TourManager
+        public ObservableCollection<TourModel> Tours { get; set; } = new ObservableCollection<TourModel>(); // to store (reference) all the tours from TourManager
 
         public ICommand ShowWindowCommand { get; set; }
 
@@ -18,11 +17,10 @@ namespace tour_planner.ViewModel
         public TourListViewModel()
         {
 
-
             DeleteTourCommand = new RelayCommand(DoDeleteTour, CanDeleteTour);
             OpenAddPage = new RelayCommand(OpenAddTour, CanOpenAddTour);
             OpenEditPage = new RelayCommand(OpenEditTour, CanOpenEditTour);
-
+            OpenDetailsPage = new RelayCommand(OpenViewPage, CanOpenViewPage);
             LoadTours();
         }
 
@@ -31,26 +29,45 @@ namespace tour_planner.ViewModel
         public ICommand DeleteTourCommand { get; set; } // command to link button to a function to delete an existing route 
         public ICommand OpenAddPage { get; set; }
         public ICommand OpenEditPage { get; set; }
+        public ICommand OpenDetailsPage { get; set; }
 
 
-        private Tour _selectedTour;
-        public Tour SelectedTour
+        private TourModel _selectedTour;
+        public TourModel SelectedTour
         {
             get => _selectedTour;
             set
             {
                 _selectedTour = value;
-               OnPropertyChanged(nameof(SelectedTour)); // to update entries in data grid
+                OnPropertyChanged(nameof(SelectedTour)); // to update entries in data grid
             }
+        }
+
+
+        private void OpenViewPage(object obj)
+        {
+            var dialog = new AddEditTour
+            {
+                DataContext = new AddEditTourViewModel(_selectedTour, false)
+            };
+
+            dialog.ShowDialog();
+        }
+
+
+        private bool CanOpenViewPage(object obj)
+        {
+            return true;
         }
 
 
         private bool CanOpenEditTour(object obj)
         {
-            if(_selectedTour is null)
+            if (_selectedTour is null)
             {
                 return false;
-            } else
+            }
+            else
             {
                 return true;
             }
@@ -73,19 +90,19 @@ namespace tour_planner.ViewModel
 
         private void OpenAddTour(object obj)
         {
-            Tour newTour = new Tour();
-        var dialog = new AddEditTour()
-        {
-            DataContext = new AddEditTourViewModel(newTour)
+            TourModel newTour = new TourModel();
+            var dialog = new AddEditTour()
+            {
+                DataContext = new AddEditTourViewModel(newTour)
             };
-            if(dialog.ShowDialog() == true)
+            if (dialog.ShowDialog() == true)
             {
                 Tours.Add(newTour);
             }
         }
 
 
-      
+
 
         private void DoDeleteTour(object obj)
         {

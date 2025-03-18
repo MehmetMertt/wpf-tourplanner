@@ -15,13 +15,8 @@ namespace tour_planner.Commands
 
         public RelayCommand(Action<object> ExecuteMethode, Predicate<object> CanExecuteMethode)
         {
-
             this._Execute = ExecuteMethode;
-
-
             this._CanExecute = CanExecuteMethode;
-
-
         }
 
         public bool CanExecute(object parameter)
