@@ -73,6 +73,13 @@ namespace tour_planner
             mapView.DragButton = MouseButton.Left;
         }
 
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            // Begin dragging the window
+            this.DragMove();
+        }
 
 
         private void lstRoutes_SelectionChanged(object sender, SelectionChangedEventArgs e)

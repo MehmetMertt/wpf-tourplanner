@@ -13,83 +13,70 @@
     MinWidth="800"
     MinHeight="450"
     AllowsTransparency="True"
+    Background="Transparent"
     ResizeMode="CanResizeWithGrip"
+    Style="{StaticResource CustomWindowStyle}"
     WindowStyle="None"
     mc:Ignorable="d">
 
-    <Window.CommandBindings>
-        <CommandBinding
-            CanExecute="CommandBinding_CanExecute_1"
-            Command="{x:Static SystemCommands.CloseWindowCommand}"
-            Executed="CommandBinding_Executed_1" />
-        <CommandBinding
-            CanExecute="CommandBinding_CanExecute_1"
-            Command="{x:Static SystemCommands.MaximizeWindowCommand}"
-            Executed="CommandBinding_Executed_2" />
-        <CommandBinding
-            CanExecute="CommandBinding_CanExecute_1"
-            Command="{x:Static SystemCommands.MinimizeWindowCommand}"
-            Executed="CommandBinding_Executed_3" />
-    </Window.CommandBindings>
 
     <!--  Root Layout  -->
-    <DockPanel Background="{StaticResource PrimaryBrush}">
 
-        <!--  Custom Title Bar  -->
-        <views:TopBar DockPanel.Dock="Top" />
+    <!--  Custom Title Bar  -->
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25*" />
-                <ColumnDefinition Width="0*" />
-                <ColumnDefinition Width="7*" />
-                <ColumnDefinition Width="128*" />
-            </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*" />
+            <ColumnDefinition Width="0*" />
+            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="128*" />
+        </Grid.ColumnDefinitions>
 
-            <!--  Sidebar  -->
-            <views:Routes Grid.ColumnSpan="3" />
+        <!--  Sidebar  -->
+        <views:Routes Grid.ColumnSpan="3" />
 
 
-            <!--  Main Content Area  -->
-            <StackPanel Grid.Column="3" Margin="5,5,5,5">
-                <Border
-                    Height="200"
-                    Margin="5"
-                    Background="LightGray">
-                    <gmaps:GMapControl
-                        x:Name="mapView"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Loaded="mapView_Loaded" />
-                </Border>
+        <!--  Main Content Area  -->
+        <StackPanel Grid.Column="3" Margin="5,5,5,5">
+            <Border
+                Height="200"
+                Margin="5"
+                Background="LightGray">
+                <gmaps:GMapControl
+                    x:Name="mapView"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Loaded="mapView_Loaded" />
+            </Border>
 
-                <TextBlock
-                    Margin="5"
-                    FontWeight="Bold"
-                    Foreground="White"
-                    Text="Tour Data" />
-                <DataGrid
-                    Name="datagrid"
-                    AutoGenerateColumns="False"
-                    HeadersVisibility="Column"
-                    ItemsSource="{Binding Tours}"
-                    SelectedItem="{Binding SelectedTour, Mode=TwoWay}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding Date}"
-                            Header="Date" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding TotalDuration}"
-                            Header="Duration" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding TotalDistance}"
-                            Header="Distance" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
-        </Grid>
-    </DockPanel>
+            <TextBlock
+                Margin="5"
+                FontWeight="Bold"
+                Foreground="White"
+                Text="Tour Data" />
+            <DataGrid
+                Name="datagrid"
+                AutoGenerateColumns="False"
+                HeadersVisibility="Column"
+                ItemsSource="{Binding Tours}"
+                SelectedItem="{Binding SelectedTour, Mode=TwoWay}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Date}"
+                        Header="Date" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding TotalDuration}"
+                        Header="Duration" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding TotalDistance}"
+                        Header="Distance" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+
+
 </Window>
