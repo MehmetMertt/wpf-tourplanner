@@ -8,7 +8,7 @@ using tour_planner.View;
 
 namespace tour_planner.ViewModel
 {
-    internal class TourListViewModel : ViewModelBase
+    public class TourListViewModel : ViewModelBase
     {
         public ObservableCollection<TourModel> Tours { get; set; } = new ObservableCollection<TourModel>(); // to store (reference) all the tours from TourManager
 
@@ -36,7 +36,7 @@ namespace tour_planner.ViewModel
         public event EventHandler<TourModel> OnTourSelected;
 
         private TourModel _selectedTour;
-        public TourModel SelectedTour
+        public virtual TourModel SelectedTour
         {
             get => _selectedTour;
             set

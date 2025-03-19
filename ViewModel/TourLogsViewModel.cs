@@ -13,7 +13,7 @@ using tour_planner.View;
 
 namespace tour_planner.ViewModel
 {
-    internal class TourLogsViewModel : ViewModelBase
+    public class TourLogsViewModel : ViewModelBase
     {
 
         private TourModel _selectedTour;
@@ -74,7 +74,7 @@ namespace tour_planner.ViewModel
             }
         }
 
-        private bool CanOpenNewPage(object obj)
+        public bool CanOpenNewPage(object obj)
         {
             if (this.TourListViewModel.SelectedTour == null) return false;
             return true;
@@ -94,7 +94,7 @@ namespace tour_planner.ViewModel
             }
         }
 
-        private bool CanOpenEditPage(object obj)
+        public bool CanOpenEditPage(object obj)
         {
             if(SelectedLog == null) return false;
             return true;
