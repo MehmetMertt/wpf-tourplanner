@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows.Data;
 using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
@@ -90,7 +91,10 @@ namespace tour_planner.ViewModel
                 DataContext = new AddEditTourViewModel(_selectedTour)
             };
 
-            dialog.ShowDialog();
+            if(dialog.ShowDialog() == true)
+            {
+                CollectionViewSource.GetDefaultView(Tours).Refresh();
+            }
         }
 
         private bool CanOpenAddTour(object obj)

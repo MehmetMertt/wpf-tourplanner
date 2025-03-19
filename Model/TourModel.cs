@@ -13,7 +13,7 @@ namespace tour_planner.Model
         public string Name { get; set; }
         public string Date { get; set; }
         public string TotalDuration { get; set; }
-        public double TotalDistance { get; set; }
+        public float TotalDistance { get; set; }
         public string ImagePath { get; set; }
         public string Description { get; set; }
         public ObservableCollection<TourLogsModel> TourLogs { get; set; } = new ObservableCollection<TourLogsModel>();

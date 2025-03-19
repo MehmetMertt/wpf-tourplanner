@@ -4,10 +4,8 @@ using tour_planner.Model;
 
 internal class AddEditTourLogViewModel
 {
-    // The original tour log
     private TourLogsModel _originalTourLog;
 
-    // The working copy that will be edited
     public TourLogsModel EditableTourLog { get; set; }
 
     private bool _isActionEnabled;
@@ -29,7 +27,7 @@ internal class AddEditTourLogViewModel
         // Store the original
         _originalTourLog = selectedTourLog;
 
-        // Create a deep copy for editing
+        // Create a copy for editing
         EditableTourLog = new TourLogsModel(
             selectedTourLog.Date,
             selectedTourLog.Duration,

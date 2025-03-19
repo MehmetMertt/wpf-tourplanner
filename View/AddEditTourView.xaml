@@ -54,7 +54,7 @@
             Grid.Row="1"
             Grid.Column="1"
             IsEnabled="{Binding IsActionEnabled}"
-            Text="{Binding Tour.Name, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding _copyTour.Name, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBlock
             Grid.Row="2"
@@ -65,7 +65,7 @@
             Grid.Row="2"
             Grid.Column="1"
             IsEnabled="{Binding IsActionEnabled}"
-            Text="{Binding Tour.Date, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding _copyTour.Date, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBlock
             Grid.Row="3"
@@ -76,7 +76,18 @@
             Grid.Row="3"
             Grid.Column="1"
             IsEnabled="{Binding IsActionEnabled}"
-            Text="{Binding Tour.TotalDuration, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding _copyTour.TotalDuration, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                            <Setter Property="BorderBrush" Value="Red" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
 
         <TextBlock
             Grid.Row="4"
@@ -87,7 +98,18 @@
             Grid.Row="4"
             Grid.Column="1"
             IsEnabled="{Binding IsActionEnabled}"
-            Text="{Binding Tour.TotalDistance, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding _copyTour.TotalDistance, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Triggers>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                            <Setter Property="BorderBrush" Value="Red" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
         <Button
             Grid.Row="5"
             Grid.Column="0"
