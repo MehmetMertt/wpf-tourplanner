@@ -11,10 +11,10 @@ namespace tour_planner.ViewModel
 {
     internal class TourLogsViewModel : ViewModelBase
     {
-        public TourLogsViewModel()
+        public TourLogsViewModel(TourListViewModel tourListViewModel)
         {
             TourLogs = new ObservableCollection<TourLogsModel>();
-            
+            tourListViewModel.OnTourSelected += HandleTourSelected;
         }
 
         private TourModel _selectedTour;
@@ -35,13 +35,15 @@ namespace tour_planner.ViewModel
             }
         }
 
-        private void MainViewModel_OnTourSelected(object sender, TourModel selectedTour)
+        private void HandleTourSelected(object sender, TourModel selectedTour)
         {
-            // Handle the selected tour here
-            Debug.WriteLine($"Selected tour changed to: {selectedTour.Name}");
-            // Update properties or trigger UI changes as needed
+            // Update properties or handle the tour selection here
+            Debug.WriteLine($"Selected Tour: {selectedTour.Name}");
+            SelectedTour = selectedTour;
+            // You can update your TourLogsViewModel properties based on selectedTour
         }
 
+   
         private TourLogsModel _selectedLog;
         public TourLogsModel SelectedLog
         {

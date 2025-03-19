@@ -31,8 +31,8 @@ namespace tour_planner.ViewModel
         public ICommand OpenAddPage { get; set; }
         public ICommand OpenEditPage { get; set; }
         public ICommand OpenDetailsPage { get; set; }
-        public event Action<object, TourModel> OnTourSelected;
 
+        public event EventHandler<TourModel> OnTourSelected;
 
         private TourModel _selectedTour;
         public TourModel SelectedTour

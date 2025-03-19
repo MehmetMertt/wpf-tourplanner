@@ -24,8 +24,7 @@ namespace tour_planner.View
         public TourLogsView()
         {
             InitializeComponent();
-            TourLogsViewModel tourLogsViewModel = new TourLogsViewModel();
-            this.DataContext = tourLogsViewModel;
+
         }
     }
 }

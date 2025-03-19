@@ -24,8 +24,7 @@ namespace tour_planner.View
         public Routes()
         {
             InitializeComponent();
-            TourListViewModel routeViewModel = new TourListViewModel();
-            this.DataContext = routeViewModel;
+
         }
 
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)

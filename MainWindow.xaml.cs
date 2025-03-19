@@ -15,6 +15,8 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using tour_planner.ViewModel;
+using tour_planner.View;
+
 using System.Text.RegularExpressions;
 using tour_planner.Model;
 using System.Diagnostics;
@@ -34,33 +36,15 @@ namespace tour_planner
             InitializeComponent();
 
 
+            TourListViewModel routeViewModel = new TourListViewModel();
+            RoutesView.DataContext = routeViewModel;
+
+            TourLogsViewModel tourLogsViewModel = new TourLogsViewModel(routeViewModel);
+            TourLogsView.DataContext = tourLogsViewModel;
 
 
-            // Get the instances of the ViewModels from the views
-            var tourListView = (View.Routes)FindName("TourListView");
-            var tourLogsView = (View.TourLogsView)FindName("TourLogsView");
 
-            Debug.WriteLine("its notnot safe");
-            Debug.WriteLine("its notnot safe");
-            Debug.WriteLine("its notnot safe");
-            Debug.WriteLine("its notnot safe");
 
-            if (tourListView != null && tourLogsView != null)
-            {
-                var tourListViewModel = (TourListViewModel)tourListView.DataContext;
-                var tourLogsViewModel = (TourLogsViewModel)tourLogsView.DataContext;
-
-                Debug.WriteLine("its safe");
-                Debug.WriteLine("its safe");
-                Debug.WriteLine("its safe");
-                Debug.WriteLine("its safe");
-                // Subscribe to the tour selection change event
-                tourListViewModel.OnTourSelected += (sender, selectedTour) =>
-                {
-                    // Pass the selected tour to the TourLogsViewModel
-                    tourLogsViewModel.SelectedTour = selectedTour;
-                };
-            }
         }
 
       

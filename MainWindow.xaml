@@ -35,8 +35,7 @@
         </Grid.ColumnDefinitions>
 
         <!--  Sidebar  -->
-        <views:Routes Grid.ColumnSpan="3" />
-
+        <views:Routes x:Name="RoutesView" Grid.ColumnSpan="3" />
 
         <!--  Main Content Area  -->
         <StackPanel Grid.Column="3" Margin="5,5,5,5">
@@ -51,7 +50,8 @@
                     Loaded="mapView_Loaded" />
             </Border>
 
-            <views:TourLogsView />
+            <views:TourLogsView x:Name="TourLogsView" />
+
         </StackPanel>
     </Grid>
 
