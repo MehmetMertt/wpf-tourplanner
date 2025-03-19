@@ -9,11 +9,11 @@ namespace tour_planner.Model
     public class TourLogsModel
     {
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
         public string Duration { get; set; }
         public double Distance { get; set; }
 
-        public TourLogsModel(DateTime date, string duration, double distance) {
+        public TourLogsModel(string date, string duration, double distance) {
             Date = date;
             Duration = duration;
             Distance = distance;

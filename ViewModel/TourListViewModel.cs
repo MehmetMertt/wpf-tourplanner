@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
@@ -30,6 +31,7 @@ namespace tour_planner.ViewModel
         public ICommand OpenAddPage { get; set; }
         public ICommand OpenEditPage { get; set; }
         public ICommand OpenDetailsPage { get; set; }
+        public event Action<object, TourModel> OnTourSelected;
 
 
         private TourModel _selectedTour;
@@ -40,8 +42,16 @@ namespace tour_planner.ViewModel
             {
                 _selectedTour = value;
                 OnPropertyChanged(nameof(SelectedTour)); // to update entries in data grid
+                if (_selectedTour != null)
+                {                  
+                    // This can be used to update other views when the tour is selected
+                    OnTourSelected?.Invoke(this, _selectedTour);
+                }
             }
+
+
         }
+
 
 
         private void OpenViewPage(object obj)
@@ -127,6 +137,18 @@ namespace tour_planner.ViewModel
         private void LoadTours()
         {
             Tours = TourManager.getTours();
+
+            if (Tours.Count > 0)
+            {
+                Tours[0].TourLogs.Add(new TourLogsModel("01.01.2025", "2h", 20.5));
+                Tours[0].TourLogs.Add(new TourLogsModel("02.01.2025", "3h", 25.1));
+            }
+
+            if (Tours.Count > 1)
+            {
+                Tours[1].TourLogs.Add(new TourLogsModel("02.01.2025", "23h", 20.5));
+                Tours[1].TourLogs.Add(new TourLogsModel("02.01.2025", "1h", 25.1));
+            }
         }
     }
 }

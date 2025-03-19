@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace tour_planner.Model
         public double TotalDistance { get; set; }
         public string ImagePath { get; set; }
         public string Description { get; set; }
-        public List<TourLogsModel> tourLogs { get; set; }
+        public ObservableCollection<TourLogsModel> TourLogs { get; set; } = new ObservableCollection<TourLogsModel>();
 
         public TourModel(string name = "New Tour", string date = "DD.MM.YYYY", string duration = "0", float distance = 0f)
         {
@@ -23,6 +24,8 @@ namespace tour_planner.Model
             Date = date;
             TotalDuration = duration;
             TotalDistance = distance;
+            ImagePath = "";
+            Description = "";
         }
 
     }

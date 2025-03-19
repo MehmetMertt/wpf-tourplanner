@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using tour_planner.ViewModel;
 using System.Text.RegularExpressions;
+using tour_planner.Model;
+using System.Diagnostics;
 
 namespace tour_planner
 {
@@ -24,13 +26,44 @@ namespace tour_planner
     /// </summary>
     public partial class MainWindow : Window
     {
+        private TourListViewModel tourListViewModel;
+        private TourLogsViewModel tourLogsViewModel;
+
         public MainWindow()
         {
             InitializeComponent();
-/*            TourListViewModel routeViewModel = new TourListViewModel();
-            this.DataContext = routeViewModel;*/
+
+
+
+
+            // Get the instances of the ViewModels from the views
+            var tourListView = (View.Routes)FindName("TourListView");
+            var tourLogsView = (View.TourLogsView)FindName("TourLogsView");
+
+            Debug.WriteLine("its notnot safe");
+            Debug.WriteLine("its notnot safe");
+            Debug.WriteLine("its notnot safe");
+            Debug.WriteLine("its notnot safe");
+
+            if (tourListView != null && tourLogsView != null)
+            {
+                var tourListViewModel = (TourListViewModel)tourListView.DataContext;
+                var tourLogsViewModel = (TourLogsViewModel)tourLogsView.DataContext;
+
+                Debug.WriteLine("its safe");
+                Debug.WriteLine("its safe");
+                Debug.WriteLine("its safe");
+                Debug.WriteLine("its safe");
+                // Subscribe to the tour selection change event
+                tourListViewModel.OnTourSelected += (sender, selectedTour) =>
+                {
+                    // Pass the selected tour to the TourLogsViewModel
+                    tourLogsViewModel.SelectedTour = selectedTour;
+                };
+            }
         }
 
+      
 
         // https://stackoverflow.com/questions/13930633/in-wpf-can-i-have-a-borderless-window-that-has-regular-minimize-maximise-and-c
         #region ControlButtons
@@ -82,76 +115,6 @@ namespace tour_planner
         }
 
 
-        private void lstRoutes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            /*
-            if (lstRoutes.SelectedItem is ListBoxItem selectedItem)
-            {
-                string selectedRoute = selectedItem.Content.ToString();
-                UpdateRoute(selectedRoute);
-            }
-            */
-        }
-        /*
-        private void UpdateRoute(string routeName)
-        {
-            List<Route> tourData = new List<Route>();
-            mapView.Markers.Clear();
-
-            switch (routeName)
-            {
-                case "Wien Tour":
-                    mapView.Position = new PointLatLng(48.2082, 16.3738);
-                    tourData.Add(new Route { Date = "24.02.2025", Duration = "2h", Distance = "15 km" });
-
-                    AddMarker(48.2082, 16.3738, "Start - Stephansplatz");
-                    AddMarker(48.2064, 16.3701, "Stop 1 - Karlskirche");
-                    AddMarker(48.2013, 16.3622, "Stop 2 - Schloss Belvedere");
-                    break;
-
-                case "NÖ Tour":
-                    mapView.Position = new PointLatLng(48.3031, 16.2476);
-                    tourData.Add(new Route { Date = "25.02.2025", Duration = "3h", Distance = "25 km" });
-
-                    AddMarker(48.3031, 16.2476, "Start - Klosterneuburg");
-                    AddMarker(48.2976, 16.2214, "Stop 1 - Stift Heiligenkreuz");
-                    AddMarker(48.2832, 16.1876, "Stop 2 - Mayerling");
-                    break;
-
-                case "Favoriten Tour":
-                    mapView.Position = new PointLatLng(48.1702, 16.3635);
-                    tourData.Add(new Route { Date = "26.02.2025", Duration = "1.5h", Distance = "10 km" });
-
-                    AddMarker(48.1702, 16.3635, "Start - Hauptbahnhof");
-                    AddMarker(48.1680, 16.3690, "Stop 1 - Böhmischer Prater");
-                    break;
-
-                case "Sestadt Tour":
-                    mapView.Position = new PointLatLng(48.2653, 16.5116);
-                    tourData.Add(new Route { Date = "27.02.2025", Duration = "2h", Distance = "12 km" });
-
-                    AddMarker(48.2653, 16.5116, "Start - Seestadt Aspern");
-                    AddMarker(48.2615, 16.5069, "Stop 1 - TechGate Vienna");
-                    break;
-            }
-
-            datagrid.ItemsSource = tourData;
-        }
-
-        private void AddMarker(double lat, double lng, string description)
-        {
-            GMapMarker marker = new GMapMarker(new PointLatLng(lat, lng))
-            {
-                Shape = new System.Windows.Shapes.Ellipse
-                {
-                    Width = 10,
-                    Height = 10,
-                    Stroke = System.Windows.Media.Brushes.Red,
-                    Fill = System.Windows.Media.Brushes.Red
-                }
-            };
-            mapView.Markers.Add(marker);
-        }
-        */
+    
     }
 }

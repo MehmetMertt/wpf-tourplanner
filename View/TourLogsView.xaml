@@ -14,12 +14,38 @@
             FontWeight="Bold"
             Foreground="{StaticResource TextColorBrush}"
             Text="Tour Data" />
+        <Grid Margin="0,5,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                Width="50"
+                Height="20"
+                HorizontalAlignment="Center"
+                Content="+" />
+            <Button
+                Grid.Column="1"
+                Width="50"
+                Height="20"
+                HorizontalAlignment="Center"
+                Content="-" />
+            <Button
+                Grid.Column="2"
+                Width="50"
+                Height="20"
+                HorizontalAlignment="Center"
+                Content="..." />
+
+        </Grid>
         <DataGrid
             Name="datagrid"
             AutoGenerateColumns="False"
             HeadersVisibility="Column"
-            ItemsSource="{Binding Tours}"
-            SelectedItem="{Binding SelectedTour, Mode=TwoWay}">
+            ItemsSource="{Binding SelectedTour.TourLogs}"
+            SelectedItem="{Binding SelectedLog, Mode=TwoWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="*"
@@ -27,11 +53,11 @@
                     Header="Date" />
                 <DataGridTextColumn
                     Width="*"
-                    Binding="{Binding TotalDuration}"
+                    Binding="{Binding Duration}"
                     Header="Duration" />
                 <DataGridTextColumn
                     Width="*"
-                    Binding="{Binding TotalDistance}"
+                    Binding="{Binding Distance}"
                     Header="Distance" />
             </DataGrid.Columns>
         </DataGrid>
