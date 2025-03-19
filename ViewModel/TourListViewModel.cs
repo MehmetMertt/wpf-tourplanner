@@ -140,14 +140,14 @@ namespace tour_planner.ViewModel
 
             if (Tours.Count > 0)
             {
-                Tours[0].TourLogs.Add(new TourLogsModel("01.01.2025", "2h", 20.5));
-                Tours[0].TourLogs.Add(new TourLogsModel("02.01.2025", "3h", 25.1));
+                Tours[0].TourLogs.Add(new TourLogsModel(new DateTime(2025, 3, 18), 2, 20.5f));
+                Tours[0].TourLogs.Add(new TourLogsModel(new DateTime(2025, 3, 19), 3, 25.1f));
             }
 
             if (Tours.Count > 1)
             {
-                Tours[1].TourLogs.Add(new TourLogsModel("02.01.2025", "23h", 20.5));
-                Tours[1].TourLogs.Add(new TourLogsModel("02.01.2025", "1h", 25.1));
+                Tours[1].TourLogs.Add(new TourLogsModel(new DateTime(2025, 3, 17), 1, 20.5f));
+                Tours[1].TourLogs.Add(new TourLogsModel(new DateTime(2025, 3, 16), 24, 25.1f));
             }
         }
     }

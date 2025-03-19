@@ -35,7 +35,7 @@
             DisplayMemberPath="Name"
             ItemsSource="{Binding Tours}"
             MouseDoubleClick="ListView_MouseDoubleClick"
-            SelectedItem="{Binding SelectedTour, Mode=TwoWay}" />
+            SelectedItem="{Binding SelectedTour, Mode=OneWayToSource}" />
         <!--  SelectionChanged="lstRoutes_SelectionChanged"  -->
     </StackPanel>
 

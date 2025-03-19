@@ -25,18 +25,21 @@
                 Width="50"
                 Height="20"
                 HorizontalAlignment="Center"
+                Command="{Binding OpenNewPage}"
                 Content="+" />
             <Button
                 Grid.Column="1"
                 Width="50"
                 Height="20"
                 HorizontalAlignment="Center"
+                Command="{Binding DeleteCommand}"
                 Content="-" />
             <Button
                 Grid.Column="2"
                 Width="50"
                 Height="20"
                 HorizontalAlignment="Center"
+                Command="{Binding OpenEditPage}"
                 Content="..." />
 
         </Grid>
@@ -44,8 +47,9 @@
             Name="datagrid"
             AutoGenerateColumns="False"
             HeadersVisibility="Column"
+            IsReadOnly="True"
             ItemsSource="{Binding SelectedTour.TourLogs}"
-            SelectedItem="{Binding SelectedLog, Mode=TwoWay}">
+            SelectedItem="{Binding SelectedLog}">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="*"
