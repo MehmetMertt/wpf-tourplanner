@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tour-planner", "..\Swen2_TourPlanner_Intermediate_Handin_Klys_Mert2\wpf-tourplanner\tour-planner.csproj", "{D8AEDDBA-19BA-7C0F-A913-AFE4A7EDF26D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlannerTests", "..\Swen2_TourPlanner_Intermediate_Handin_Klys_Mert2\TourPlannerTests\TourPlannerTests.csproj", "{791F21CB-8C36-7222-2DA6-03C1F04F8FB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8AEDDBA-19BA-7C0F-A913-AFE4A7EDF26D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8AEDDBA-19BA-7C0F-A913-AFE4A7EDF26D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8AEDDBA-19BA-7C0F-A913-AFE4A7EDF26D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8AEDDBA-19BA-7C0F-A913-AFE4A7EDF26D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791F21CB-8C36-7222-2DA6-03C1F04F8FB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791F21CB-8C36-7222-2DA6-03C1F04F8FB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791F21CB-8C36-7222-2DA6-03C1F04F8FB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791F21CB-8C36-7222-2DA6-03C1F04F8FB6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {956FFDB0-FD07-4730-A70E-52DC5B1993F0}
+	EndGlobalSection
+EndGlobal
