@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace tour_planner.Commands
 {
     internal class RelayCommand : ICommand
     {
         private readonly Action<object> _Execute;
-        //private readonly Func<object, bool> _CanExecute;
         private readonly Predicate<object> _CanExecute;
 
         public event EventHandler CanExecuteChanged
@@ -34,5 +28,7 @@ namespace tour_planner.Commands
         {
             _Execute(parameter);
         }
+
+
     }
 }

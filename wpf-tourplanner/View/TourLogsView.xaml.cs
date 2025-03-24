@@ -12,17 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using tour_planner.ViewModel;
 
 namespace tour_planner.View
 {
     /// <summary>
-    /// Interaction logic for Routes.xaml
+    /// Interaction logic for TourLogsView.xaml
     /// </summary>
-    public partial class Routes : UserControl
+    public partial class TourLogsView : UserControl
     {
-        public Routes()
+        public TourLogsView()
         {
             InitializeComponent();
+
         }
     }
 }
