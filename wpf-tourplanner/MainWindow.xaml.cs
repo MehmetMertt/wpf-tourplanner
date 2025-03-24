@@ -26,6 +26,15 @@ namespace tour_planner
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+ 
+    /* TODO:
+     * changable style/theme maybe
+
+     */
+
+
     public partial class MainWindow : Window
     {
         private TourListViewModel tourListViewModel;

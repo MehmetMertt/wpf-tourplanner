@@ -28,10 +28,10 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25*" />
+            <ColumnDefinition Width="5*" />
             <ColumnDefinition Width="0*" />
             <ColumnDefinition Width="7*" />
-            <ColumnDefinition Width="128*" />
+            <ColumnDefinition Width="40*" />
         </Grid.ColumnDefinitions>
 
         <!--  Sidebar  -->

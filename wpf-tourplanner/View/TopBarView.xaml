@@ -17,8 +17,8 @@
         CornerRadius="20">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <TextBlock
                 Grid.Column="0"
@@ -28,23 +28,26 @@
                 Text="Tourplanner" />
             <StackPanel
                 Grid.Column="1"
-                FlowDirection="RightToLeft"
+                HorizontalAlignment="Right"
                 Orientation="Horizontal">
+
+
+
                 <Button
-                    Width="25"
-                    Height="25"
-                    Command="{Binding Close}"
-                    Content="X" />
-                <Button
-                    Width="25"
-                    Height="25"
-                    Command="{Binding Maximize}"
-                    Content="[]" />
-                <Button
-                    Width="25"
-                    Height="25"
+                    Margin="5,0"
                     Command="{Binding Minimize}"
-                    Content="-" />
+                    Content="━"
+                    Style="{StaticResource TopBarButton}" />
+                <Button
+                    Margin="5,0"
+                    Command="{Binding Maximize}"
+                    Content="🗖"
+                    Style="{StaticResource TopBarButton}" />
+                <Button
+                    Margin="5,0"
+                    Command="{Binding Close}"
+                    Content="✖"
+                    Style="{StaticResource TopBarButton}" />
             </StackPanel>
         </Grid>
     </Border>

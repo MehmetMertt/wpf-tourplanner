@@ -18,77 +18,79 @@
             GlassFrameThickness="0"
             ResizeBorderThickness="4" />
     </WindowChrome.WindowChrome>
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <StackPanel VerticalAlignment="Center">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        <TextBlock
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="0,0,0,10"
-            HorizontalAlignment="Center"
-            FontSize="24"
-            FontWeight="Bold"
-            Foreground="White"
-            Text="Logs Details" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,0,0,10"
+                HorizontalAlignment="Center"
+                FontSize="24"
+                FontWeight="Bold"
+                Foreground="White"
+                Text="Logs Details" />
 
 
-        <TextBlock
-            Grid.Row="2"
-            Grid.Column="0"
-            Foreground="White"
-            Text="Date:" />
-        <TextBox
-            Grid.Row="2"
-            Grid.Column="1"
-            IsEnabled="{Binding IsActionEnabled}"
-            Text="{Binding EditableTourLog.Date}" />
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Foreground="White"
+                Text="Date:" />
+            <TextBox
+                Grid.Row="2"
+                Grid.Column="1"
+                IsEnabled="{Binding IsActionEnabled}"
+                Text="{Binding EditableTourLog.Date}" />
 
-        <TextBlock
-            Grid.Row="3"
-            Grid.Column="0"
-            Foreground="White"
-            Text="Duration:" />
-        <TextBox
-            Grid.Row="3"
-            Grid.Column="1"
-            IsEnabled="{Binding IsActionEnabled}"
-            Text="{Binding EditableTourLog.Duration}" />
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                Foreground="White"
+                Text="Duration:" />
+            <TextBox
+                Grid.Row="3"
+                Grid.Column="1"
+                IsEnabled="{Binding IsActionEnabled}"
+                Text="{Binding EditableTourLog.Duration}" />
 
-        <TextBlock
-            Grid.Row="4"
-            Grid.Column="0"
-            Foreground="White"
-            Text="Distance:" />
-        <TextBox
-            Grid.Row="4"
-            Grid.Column="1"
-            IsEnabled="{Binding IsActionEnabled}"
-            Text="{Binding EditableTourLog.Distance}" />
-        <Button
-            Grid.Row="5"
-            Grid.Column="0"
-            Command="{Binding SaveCommandLog}"
-            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
-            Content="Save"
-            IsEnabled="{Binding IsActionEnabled}" />
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                Foreground="White"
+                Text="Distance:" />
+            <TextBox
+                Grid.Row="4"
+                Grid.Column="1"
+                IsEnabled="{Binding IsActionEnabled}"
+                Text="{Binding EditableTourLog.Distance}" />
 
-        <Button
-            Grid.Row="6"
-            Grid.Column="0"
-            Content="Cancel" />
+        </Grid>
 
-    </Grid>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button
+                Margin="0,0,10,0"
+                Command="{Binding SaveCommandLog}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                Content="Save"
+                IsEnabled="{Binding IsActionEnabled}"
+                Style="{StaticResource DarkThemeButton}" />
+
+            <Button Content="Cancel" Style="{StaticResource DarkThemeButton}" />
+        </StackPanel>
+    </StackPanel>
+
 </Window>

@@ -26,30 +26,89 @@
                 Height="20"
                 HorizontalAlignment="Center"
                 Command="{Binding OpenNewPage}"
-                Content="+" />
+                Content="➕"
+                Style="{StaticResource ActionButton}" />
             <Button
                 Grid.Column="1"
                 Width="50"
                 Height="20"
                 HorizontalAlignment="Center"
                 Command="{Binding DeleteCommand}"
-                Content="-" />
+                Content="🗑️"
+                Style="{StaticResource ActionButton}" />
             <Button
                 Grid.Column="2"
                 Width="50"
                 Height="20"
                 HorizontalAlignment="Center"
                 Command="{Binding OpenEditPage}"
-                Content="..." />
+                Content="✏️"
+                Style="{StaticResource ActionButton}" />
 
         </Grid>
         <DataGrid
             Name="datagrid"
             AutoGenerateColumns="False"
+            Background="Transparent"
+            BorderBrush="Transparent"
+            BorderThickness="10"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            FocusVisualStyle="{x:Null}"
+            GridLinesVisibility="None"
             HeadersVisibility="Column"
             IsReadOnly="True"
             ItemsSource="{Binding SelectedTour.TourLogs}"
-            SelectedItem="{Binding SelectedLog}">
+            SelectedItem="{Binding SelectedLog}"
+            SelectionMode="Single"
+            SelectionUnit="FullRow">
+
+            <!--  Header Styling  -->
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
+                    <Setter Property="Margin" Value="0,5" />
+                    <Setter Property="Foreground" Value="{StaticResource TextColorBrush}" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Padding" Value="5" />
+                </Style>
+            </DataGrid.Resources>
+
+            <!--  Row Styling  -->
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Margin" Value="0,2" />
+                    <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
+                    <Setter Property="Foreground" Value="{StaticResource TextColorBrush}" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource TextColorBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+
+            <!--  Cell Styling  -->
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
+                    <Setter Property="Foreground" Value="{StaticResource TextColorBrush}" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Style.Triggers>
+                        <!--  Highlight the cell with the same accent color when selected  -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource TextColorBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+
+            <!--  Column Definitions  -->
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="*"
@@ -65,5 +124,9 @@
                     Header="Distance" />
             </DataGrid.Columns>
         </DataGrid>
+
+
+
+
     </StackPanel>
 </UserControl>

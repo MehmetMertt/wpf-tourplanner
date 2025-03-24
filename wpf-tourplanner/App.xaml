@@ -9,6 +9,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Ressources/Colors.xaml" />
                 <ResourceDictionary Source="Theme/WindowStyle.xaml" />
+                <ResourceDictionary Source="Theme/TopBarButtons.xaml" />
+                <ResourceDictionary Source="Theme/ButtonStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
