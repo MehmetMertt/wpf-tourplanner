@@ -1,0 +1,59 @@
+﻿<Window
+    x:Class="tour_planner.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+    xmlns:local="clr-namespace:tour_planner"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:tour_planner.View"
+    Title="Routenplanner"
+    Width="800"
+    Height="450"
+    MinWidth="800"
+    MinHeight="450"
+    Style="{StaticResource CustomWindowStyle}"
+    mc:Ignorable="d">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="0"
+            CornerRadius="20"
+            GlassFrameThickness="0"
+            ResizeBorderThickness="4" />
+    </WindowChrome.WindowChrome>
+    <!--  Root Layout  -->
+
+    <!--  Custom Title Bar  -->
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*" />
+            <ColumnDefinition Width="0*" />
+            <ColumnDefinition Width="7*" />
+            <ColumnDefinition Width="128*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Sidebar  -->
+        <views:Routes x:Name="RoutesView" Grid.ColumnSpan="3" />
+
+        <!--  Main Content Area  -->
+        <StackPanel Grid.Column="3" Margin="5,5,5,5">
+            <Border
+                Height="200"
+                Margin="5"
+                Background="LightGray">
+                <gmaps:GMapControl
+                    x:Name="mapView"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Loaded="mapView_Loaded" />
+            </Border>
+
+            <views:TourLogsView x:Name="TourLogsView" />
+
+        </StackPanel>
+    </Grid>
+
+
+</Window>
