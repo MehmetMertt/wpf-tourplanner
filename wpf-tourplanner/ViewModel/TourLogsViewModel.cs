@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using tour_planner.Commands;
-using tour_planner.Model;
 using tour_planner.View;
+using TourPlanner.Domain;
 
 namespace tour_planner.ViewModel
 {

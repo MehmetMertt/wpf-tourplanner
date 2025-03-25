@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using tour_planner.Commands;
-using tour_planner.Model;
+using TourPlanner.Domain;
 
 internal class AddEditTourLogViewModel
 {

@@ -20,6 +20,11 @@ using tour_planner.View;
 using System.Text.RegularExpressions;
 using tour_planner.Model;
 using System.Diagnostics;
+using TourPlanner.DAL.Queries;
+using TourPlanner.DAL;
+using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
+using System.Configuration;
 
 namespace tour_planner
 {
@@ -40,12 +45,36 @@ namespace tour_planner
         private TourListViewModel tourListViewModel;
         private TourLogsViewModel tourLogsViewModel;
 
+        private readonly TourDbContextFactory _tourDbContextFactory;
+        public CreateTourQuery _createTourQuery;
+        public DeleteTourQuery _deleteTourQuery;
+        public UpdateTourQuery _updateTourQuery;
+        public GetAllToursQuery _getAllToursQuery;
+        public TourManager _tourManager;
+
         public MainWindow()
         {
             InitializeComponent();
 
+            string connectionString = "Host=localhost;Username=user;Password=password;Database=tour_db";
 
-            TourListViewModel routeViewModel = new TourListViewModel();
+            _tourDbContextFactory = new TourDbContextFactory(
+                new DbContextOptionsBuilder().UseNpgsql(connectionString).Options
+                );
+            using(TourDbContext context = _tourDbContextFactory.Create()) //good for future migrations -> auto migrations
+            {
+                context.Database.Migrate();
+            }
+
+
+            _createTourQuery = new CreateTourQuery(_tourDbContextFactory);
+            _deleteTourQuery = new DeleteTourQuery(_tourDbContextFactory);
+            _updateTourQuery = new UpdateTourQuery(_tourDbContextFactory);
+            _getAllToursQuery = new GetAllToursQuery(_tourDbContextFactory);
+            _tourManager = new TourManager(_createTourQuery, _deleteTourQuery, _updateTourQuery, _getAllToursQuery);
+
+
+            TourListViewModel routeViewModel = new TourListViewModel(_tourManager);
             RoutesView.DataContext = routeViewModel;
 
             TourLogsViewModel tourLogsViewModel = new TourLogsViewModel(routeViewModel);
@@ -56,7 +85,7 @@ namespace tour_planner
 
         }
 
-      
+
 
         // https://stackoverflow.com/questions/13930633/in-wpf-can-i-have-a-borderless-window-that-has-regular-minimize-maximise-and-c
         #region ControlButtons

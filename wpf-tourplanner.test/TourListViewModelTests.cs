@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.ObjectModel;
 using tour_planner.Commands;
-using tour_planner.Model;
+using TourPlanner.Domain;
 using tour_planner.ViewModel;
 using System.Windows.Input;
 
@@ -20,7 +20,7 @@ namespace TourPlannerUnitTests
         public void Setup()
         {
             _mockTourListViewModel = new Mock<TourListViewModel>();
-            _tourModel = new TourModel { Name = "Test Tour", TourLogs = new ObservableCollection<TourLogsModel>() };
+            _tourModel = new TourModel { Id = Guid.NewGuid(), Name = "Test Tour", TourLogs = new ObservableCollection<TourLogsModel>() };
 
             _mockTourListViewModel.Setup(m => m.SelectedTour).Returns(_tourModel);
             _viewModel = new TourLogsViewModel(_mockTourListViewModel.Object);

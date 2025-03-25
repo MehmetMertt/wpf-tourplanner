@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Collections.ObjectModel;
 
-namespace tour_planner.Model
+namespace TourPlanner.Domain
 {
     public class TourModel
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Date { get; set; }
         public string TotalDuration { get; set; }
@@ -20,6 +15,7 @@ namespace tour_planner.Model
 
         public TourModel(string name = "New Tour", string date = "DD.MM.YYYY", string duration = "0", float distance = 0f)
         {
+            Id = Guid.NewGuid();
             Name = name;
             Date = date;
             TotalDuration = duration;

@@ -19,6 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TourPlanner.DAL\TourPlanner.DAL.csproj" />
+    <ProjectReference Include="..\TourPlanner.Domain\TourPlanner.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Ressources\maximize.svg" />
   </ItemGroup>
 

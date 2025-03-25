@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
+using TourPlanner.Domain;
 
 namespace tour_planner.ViewModel
 {
@@ -11,12 +12,14 @@ namespace tour_planner.ViewModel
         public TourModel _copyTour { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand ToggleActionCommand { get; set; }
+        public TourManager _tourManager { get; }
 
-        public AddEditTourViewModel(TourModel tour, bool _IsActionEnabled = true)
+        public AddEditTourViewModel(TourModel tour, TourManager tourManager, bool _IsActionEnabled = true)
         {
 
             // Create a copy for editing
 
+            _tourManager = tourManager;
 
 
             Tour = tour;
@@ -31,6 +34,7 @@ namespace tour_planner.ViewModel
             IsActionEnabled = _IsActionEnabled;
         }
 
+  
 
         private bool _isActionEnabled;
         public bool IsActionEnabled
@@ -41,6 +45,8 @@ namespace tour_planner.ViewModel
                 _isActionEnabled = value;
             }
         }
+
+     
 
         private void DoAddTour(object obj)
         {
@@ -57,6 +63,7 @@ namespace tour_planner.ViewModel
 
             if (obj is System.Windows.Window window)
             {
+                _tourManager.AddTour(Tour);
                 window.DialogResult = true;
                 window.Close();
             }

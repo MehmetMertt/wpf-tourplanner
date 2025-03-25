@@ -5,25 +5,32 @@ using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
 using tour_planner.View;
+using TourPlanner.Domain;
+
 
 namespace tour_planner.ViewModel
 {
     public class TourListViewModel : ViewModelBase
     {
-        public ObservableCollection<TourModel> Tours { get; set; } = new ObservableCollection<TourModel>(); // to store (reference) all the tours from TourManager
+        public ObservableCollection<TourModel> Tours { get; set; } = new ObservableCollection<TourModel>(); 
 
         public ICommand ShowWindowCommand { get; set; }
 
+        private TourManager _tourManager {get; set;}
 
-
-        public TourListViewModel()
+        public TourListViewModel(TourManager tourManager)
         {
-
+            _tourManager = tourManager;
             DeleteTourCommand = new RelayCommand(DoDeleteTour, CanDeleteTour);
             OpenAddPage = new RelayCommand(OpenAddTour, CanOpenAddTour);
             OpenEditPage = new RelayCommand(OpenEditTour, CanOpenEditTour);
             OpenDetailsPage = new RelayCommand(OpenViewPage, CanOpenViewPage);
             LoadTours();
+            Debug.WriteLine(Tours.ToString());
+            Debug.WriteLine(Tours.ToString());
+            Debug.WriteLine(Tours.ToString());
+            Debug.WriteLine(Tours.ToString());
+            Debug.WriteLine(Tours.ToString());
         }
 
 
@@ -59,7 +66,7 @@ namespace tour_planner.ViewModel
         {
             var dialog = new AddEditTour
             {
-                DataContext = new AddEditTourViewModel(_selectedTour, false)
+                DataContext = new AddEditTourViewModel(_selectedTour, _tourManager,false)
             };
 
             dialog.ShowDialog();
@@ -88,7 +95,7 @@ namespace tour_planner.ViewModel
         {
             var dialog = new AddEditTour
             {
-                DataContext = new AddEditTourViewModel(_selectedTour)
+                DataContext = new AddEditTourViewModel(_selectedTour,_tourManager)
             };
 
             if(dialog.ShowDialog() == true)
@@ -107,7 +114,7 @@ namespace tour_planner.ViewModel
             TourModel newTour = new TourModel();
             var dialog = new AddEditTour()
             {
-                DataContext = new AddEditTourViewModel(newTour)
+                DataContext = new AddEditTourViewModel(newTour, _tourManager)
             };
             if (dialog.ShowDialog() == true)
             {
@@ -121,7 +128,7 @@ namespace tour_planner.ViewModel
         private void DoDeleteTour(object obj)
         {
 
-            TourManager.DeleteTour(SelectedTour);
+            //TourManager.DeleteTour(SelectedTour);
         }
 
         private bool CanDeleteTour(object obj)
@@ -138,20 +145,14 @@ namespace tour_planner.ViewModel
 
 
 
-        private void LoadTours()
+        private async void LoadTours()
         {
-            Tours = TourManager.getTours();
 
-            if (Tours.Count > 0)
+            var tours = await _tourManager.getTours();
+            Tours.Clear();
+            foreach(var tour in tours)
             {
-                Tours[0].TourLogs.Add(new TourLogsModel(new DateTime(2025, 3, 18), 2, 20.5f));
-                Tours[0].TourLogs.Add(new TourLogsModel(new DateTime(2025, 3, 19), 3, 25.1f));
-            }
-
-            if (Tours.Count > 1)
-            {
-                Tours[1].TourLogs.Add(new TourLogsModel(new DateTime(2025, 3, 17), 1, 20.5f));
-                Tours[1].TourLogs.Add(new TourLogsModel(new DateTime(2025, 3, 16), 24, 25.1f));
+                Tours.Add(tour);
             }
         }
     }
