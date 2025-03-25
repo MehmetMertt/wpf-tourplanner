@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using tour_planner.Commands;
+using tour_planner.Model;
 using tour_planner.View;
 using TourPlanner.Domain;
 
@@ -37,15 +38,17 @@ namespace tour_planner.ViewModel
         public ICommand OpenNewPage { get; set; }
         public ICommand DeleteCommand { get; set; }
         private TourListViewModel TourListViewModel {get; set;}
+        private TourManager _tourManager;
 
-        public TourLogsViewModel(TourListViewModel tourListViewModel)
+        public TourLogsViewModel(TourListViewModel tourListViewModel,TourManager tourManager)
         {
             TourLogs = new ObservableCollection<TourLogsModel>();
             this.TourListViewModel = tourListViewModel;
-            tourListViewModel.OnTourSelected += HandleTourSelected;
             OpenEditPage = new RelayCommand(DoOpenEditPage, CanOpenEditPage);
             OpenNewPage = new RelayCommand(DoOpenNewPage, CanOpenNewPage);
             DeleteCommand = new RelayCommand(DoDelete, CanDelete);
+            tourListViewModel.OnTourSelected += HandleTourSelected;
+            _tourManager = tourManager;
         }
         private ObservableCollection<TourLogsModel> _tourLogs;
 
@@ -70,6 +73,7 @@ namespace tour_planner.ViewModel
 
             if (dialog.ShowDialog() == true)
             {
+                // add logs 
                 TourLogs.Add(newLog);
             }
         }

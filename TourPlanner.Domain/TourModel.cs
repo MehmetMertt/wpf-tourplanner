@@ -13,16 +13,16 @@ namespace TourPlanner.Domain
         public string Description { get; set; }
         public ObservableCollection<TourLogsModel> TourLogs { get; set; } = new ObservableCollection<TourLogsModel>();
 
-        public TourModel(string name = "New Tour", string date = "DD.MM.YYYY", string duration = "0", float distance = 0f)
+
+        public TourModel(Guid id, string name, string date, string totalDuration, float totalDistance, string imagePath, string description)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             Name = name;
             Date = date;
-            TotalDuration = duration;
-            TotalDistance = distance;
-            ImagePath = "";
-            Description = "";
+            TotalDuration = totalDuration;
+            TotalDistance = totalDistance;
+            ImagePath = imagePath;
+            Description = description;
         }
-
     }
 }

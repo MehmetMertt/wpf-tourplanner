@@ -61,6 +61,7 @@ namespace tour_planner
             _tourDbContextFactory = new TourDbContextFactory(
                 new DbContextOptionsBuilder().UseNpgsql(connectionString).Options
                 );
+
             using(TourDbContext context = _tourDbContextFactory.Create()) //good for future migrations -> auto migrations
             {
                 context.Database.Migrate();
@@ -77,7 +78,7 @@ namespace tour_planner
             TourListViewModel routeViewModel = new TourListViewModel(_tourManager);
             RoutesView.DataContext = routeViewModel;
 
-            TourLogsViewModel tourLogsViewModel = new TourLogsViewModel(routeViewModel);
+            TourLogsViewModel tourLogsViewModel = new TourLogsViewModel(routeViewModel,_tourManager);
             TourLogsView.DataContext = tourLogsViewModel;
 
 

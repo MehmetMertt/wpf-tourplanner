@@ -100,7 +100,7 @@ namespace tour_planner.ViewModel
 
             if(dialog.ShowDialog() == true)
             {
-                CollectionViewSource.GetDefaultView(Tours).Refresh();
+                LoadTours();
             }
         }
 
@@ -111,7 +111,7 @@ namespace tour_planner.ViewModel
 
         private void OpenAddTour(object obj)
         {
-            TourModel newTour = new TourModel();
+            TourModel newTour = new TourModel(Guid.NewGuid(),"Name","DD.MM.YYYY","0",0f,"","");
             var dialog = new AddEditTour()
             {
                 DataContext = new AddEditTourViewModel(newTour, _tourManager)
@@ -128,7 +128,12 @@ namespace tour_planner.ViewModel
         private void DoDeleteTour(object obj)
         {
 
-            //TourManager.DeleteTour(SelectedTour);
+            _tourManager.DeleteTour(_selectedTour.Id);
+            var tourToRemove = Tours.FirstOrDefault(y => y.Id == _selectedTour.Id);
+            if (tourToRemove != null)
+            {
+                Tours.Remove(tourToRemove);
+            }
         }
 
         private bool CanDeleteTour(object obj)

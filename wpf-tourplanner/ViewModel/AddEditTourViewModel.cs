@@ -24,10 +24,13 @@ namespace tour_planner.ViewModel
 
             Tour = tour;
             _copyTour = new TourModel(
+                tour.Id,
                 tour.Name,
                 tour.Date,
             tour.TotalDuration,
-            tour.TotalDistance
+            tour.TotalDistance,
+            tour.ImagePath,
+            tour.Description
             );
             SaveCommand = new RelayCommand(DoAddTour, CanAddTour);
             ToggleActionCommand = new RelayCommand((object obj) => IsActionEnabled = !IsActionEnabled, (object obj) => true);
