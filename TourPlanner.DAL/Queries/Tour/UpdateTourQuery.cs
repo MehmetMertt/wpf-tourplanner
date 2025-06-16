@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TourPlanner.Domain;
 using TourPlanner.DAL.Dto;
 
-namespace TourPlanner.DAL.Queries
+namespace TourPlanner.DAL.Queries.Tour
 {
     public class UpdateTourQuery
     {
@@ -31,6 +31,9 @@ namespace TourPlanner.DAL.Queries
                     ImagePath = tour.ImagePath,
                     TotalDuration = tour.TotalDuration,
                     TotalDistance = tour.TotalDistance,
+                    From = tour.From,
+                    To = tour.To,
+                    TransportType = tour.TransportType,  
                 };
 
                 context.Tours.Update(tourDto);

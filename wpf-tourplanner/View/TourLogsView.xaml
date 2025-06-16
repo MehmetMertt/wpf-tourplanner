@@ -59,7 +59,7 @@
             GridLinesVisibility="None"
             HeadersVisibility="Column"
             IsReadOnly="True"
-            ItemsSource="{Binding SelectedTour.TourLogs}"
+            ItemsSource="{Binding TourLogs}"
             SelectedItem="{Binding SelectedLog}"
             SelectionMode="Single"
             SelectionUnit="FullRow">
@@ -122,6 +122,18 @@
                     Width="*"
                     Binding="{Binding Distance}"
                     Header="Distance" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Comment}"
+                    Header="Comment" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Difficulty}"
+                    Header="Difficulty" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Rating}"
+                    Header="Rating" />
             </DataGrid.Columns>
         </DataGrid>
 

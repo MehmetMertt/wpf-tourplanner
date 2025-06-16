@@ -9,11 +9,11 @@ using TourPlanner.DAL.Dto;
 
 namespace TourPlanner.DAL.Queries
 {
-    public class DeleteTourQuery
+    public class DeleteTourLogQuery
     {
         private readonly TourDbContextFactory _contextFactory;
 
-        public DeleteTourQuery(TourDbContextFactory contextFactory)
+        public DeleteTourLogQuery(TourDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }
@@ -22,12 +22,12 @@ namespace TourPlanner.DAL.Queries
         {
             using (TourDbContext context = _contextFactory.Create())
             {
-                TourDto tourDto = new TourDto()
+                TourLogsDto tourDto = new TourLogsDto()
                 {
                     Id = id
                 };
 
-                context.Tours.Remove(tourDto);
+                context.TourLogs.Remove(tourDto);
                 await context.SaveChangesAsync();
             }
         }

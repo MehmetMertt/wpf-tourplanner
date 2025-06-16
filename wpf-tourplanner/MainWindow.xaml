@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
-    xmlns:local="clr-namespace:tour_planner"
+    xmlns:local="clr-namespace:tour_planner.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:tour_planner.View"
     Title="Routenplanner"
@@ -49,6 +49,7 @@
                     VerticalAlignment="Stretch"
                     Loaded="mapView_Loaded" />
             </Border>
+
 
             <views:TourLogsView x:Name="TourLogsView" />
 

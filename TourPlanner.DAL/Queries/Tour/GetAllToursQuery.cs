@@ -2,7 +2,7 @@
 using TourPlanner.DAL.Dto;
 using Microsoft.EntityFrameworkCore;
 
-namespace TourPlanner.DAL.Queries
+namespace TourPlanner.DAL.Queries.Tour
 {
     public class GetAllToursQuery
     {
@@ -15,10 +15,10 @@ namespace TourPlanner.DAL.Queries
 
         public async Task<IEnumerable<TourModel>> Execute()
         {
-            using(TourDbContext context =  _contextFactory.Create())
+            using (TourDbContext context = _contextFactory.Create())
             {
                 IEnumerable<TourDto> tourModelDtos = await context.Tours.ToListAsync();
-                return tourModelDtos.Select(t => new TourModel(t.Id,t.Name, t.Date, t.TotalDuration, t.TotalDistance,t.ImagePath,t.Description));
+                return tourModelDtos.Select(t => new TourModel(t.Id, t.Name, t.Date, t.TotalDuration, t.TotalDistance, t.ImagePath, t.Description,t.From,t.To,t.TransportType));
 
             }
         }

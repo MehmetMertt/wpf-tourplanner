@@ -7,33 +7,27 @@ using System.Threading.Tasks;
 using TourPlanner.Domain;
 using TourPlanner.DAL.Dto;
 
-namespace TourPlanner.DAL.Queries
+namespace TourPlanner.DAL.Queries.Tour
 {
-    public class CreateTourQuery
+    public class DeleteTourQuery
     {
         private readonly TourDbContextFactory _contextFactory;
 
-        public CreateTourQuery(TourDbContextFactory contextFactory)
+        public DeleteTourQuery(TourDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }
 
-        public async Task Execute(TourModel tour)
+        public async Task Execute(Guid id)
         {
             using (TourDbContext context = _contextFactory.Create())
             {
                 TourDto tourDto = new TourDto()
                 {
-                    Id = tour.Id,
-                    Name = tour.Name,
-                    Date = tour.Date,
-                    Description = tour.Description,
-                    ImagePath = tour.ImagePath,
-                    TotalDuration = tour.TotalDuration,
-                    TotalDistance = tour.TotalDistance,
+                    Id = id
                 };
 
-                context.Tours.Add(tourDto);
+                context.Tours.Remove(tourDto);
                 await context.SaveChangesAsync();
             }
         }

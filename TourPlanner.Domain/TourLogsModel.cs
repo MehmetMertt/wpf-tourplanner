@@ -9,16 +9,26 @@ namespace TourPlanner.Domain
     public class TourLogsModel
     {
 
-        Guid Id { get; set; }
+        public Guid Id { get; set; }
         public DateTime Date { get; set; }
         public float Duration { get; set; }
         public float Distance { get; set; }
+        public string Comment { get; set; }
+        public string Difficulty { get; set; }
+        public int Rating { get; set; }
+        public Guid TourId { get; set; }
 
-        public TourLogsModel(DateTime date, float duration, float distance) {
-            Id = Guid.NewGuid();
+
+        public TourLogsModel(Guid id,DateTime date, float duration, float distance, string comment, string difficulty, int rating, Guid tourId)
+        {
+            Id = id;
             Date = date;
             Duration = duration;
             Distance = distance;
+            Comment = comment;
+            Difficulty = difficulty;
+            Rating = rating;
+            TourId = tourId;
         }
 
 

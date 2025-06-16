@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using TourPlanner.DAL.Queries;
+using TourPlanner.DAL.Queries.Tour;
 using TourPlanner.Domain;
 
 namespace tour_planner.Model
