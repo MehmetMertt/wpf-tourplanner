@@ -13,6 +13,9 @@ namespace TourPlanner.DAL.Dto
         public float TotalDistance { get; set; }
         public string ImagePath { get; set; }
         public string Description { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
+        public string TransportType { get; set; }
         public ObservableCollection<TourLogsDto> TourLogs { get; set; } = new ObservableCollection<TourLogsDto>();
     }
 }

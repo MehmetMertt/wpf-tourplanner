@@ -6,15 +6,15 @@ using TourPlanner.Domain;
 
 namespace tour_planner.ViewModel
 {
-    class AddEditTourViewModel
+    class EditTourViewModel
     {
         public TourModel Tour { get; set; }
         public TourModel _copyTour { get; set; }
-        public ICommand SaveCommand { get; set; }
+        public ICommand UpdateCommand { get; set; }
         public ICommand ToggleActionCommand { get; set; }
         public TourManager _tourManager { get; }
 
-        public AddEditTourViewModel(TourModel tour, TourManager tourManager, bool _IsActionEnabled = true)
+        public EditTourViewModel(TourModel tour, TourManager tourManager, bool _IsActionEnabled = true)
         {
 
             // Create a copy for editing
@@ -30,14 +30,17 @@ namespace tour_planner.ViewModel
             tour.TotalDuration,
             tour.TotalDistance,
             tour.ImagePath,
-            tour.Description
+            tour.Description,
+            tour.From,
+            tour.To,
+            tour.TransportType
             );
-            SaveCommand = new RelayCommand(DoAddTour, CanAddTour);
-            ToggleActionCommand = new RelayCommand((object obj) => IsActionEnabled = !IsActionEnabled, (object obj) => true);
+            UpdateCommand = new RelayCommand(DoUpdateTour, CanUpdateTour);
+            ToggleActionCommand = new RelayCommand((obj) => IsActionEnabled = !IsActionEnabled, (obj) => true);
             IsActionEnabled = _IsActionEnabled;
         }
 
-  
+
 
         private bool _isActionEnabled;
         public bool IsActionEnabled
@@ -49,14 +52,17 @@ namespace tour_planner.ViewModel
             }
         }
 
-     
 
-        private void DoAddTour(object obj)
+
+        private void DoUpdateTour(object obj)
         {
 
-            if (!CanAddTour(obj))
-                return;
 
+            Tour.Description = _copyTour.Description;
+            Tour.To = _copyTour.To;
+            Tour.From = _copyTour.From;
+            Tour.TransportType = _copyTour.TransportType;
+            Tour.ImagePath = _copyTour.ImagePath;
             Tour.Name = _copyTour.Name;
             Tour.Date = _copyTour.Date;
             Tour.TotalDistance = _copyTour.TotalDistance;
@@ -66,7 +72,7 @@ namespace tour_planner.ViewModel
 
             if (obj is System.Windows.Window window)
             {
-                _tourManager.AddTour(Tour);
+                _tourManager.UpdateTour(Tour);
                 window.DialogResult = true;
                 window.Close();
             }
@@ -74,9 +80,9 @@ namespace tour_planner.ViewModel
         }
 
 
-        private bool CanAddTour(object obj)
+        private bool CanUpdateTour(object obj)
         {
-            if (_copyTour.TotalDistance > 0 && String.IsNullOrEmpty(_copyTour.TotalDuration) == false && String.IsNullOrEmpty(_copyTour.Name) == false && String.IsNullOrEmpty(_copyTour.Date) == false && IsValidNumeric(_copyTour.TotalDuration) == true && IsValidNumeric(_copyTour.TotalDistance) == true && IsValidDate(_copyTour.Date,"dd.MM.yyyy") == true)
+            if (_copyTour.TotalDistance > 0 && string.IsNullOrEmpty(_copyTour.TotalDuration) == false && string.IsNullOrEmpty(_copyTour.Name) == false && string.IsNullOrEmpty(_copyTour.Date) == false && IsValidNumeric(_copyTour.TotalDuration) == true && IsValidNumeric(_copyTour.TotalDistance) == true && IsValidDate(_copyTour.Date, "dd.MM.yyyy") == true)
             {
                 return true;
             }

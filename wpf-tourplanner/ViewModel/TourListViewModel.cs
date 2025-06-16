@@ -12,11 +12,11 @@ namespace tour_planner.ViewModel
 {
     public class TourListViewModel : ViewModelBase
     {
-        public ObservableCollection<TourModel> Tours { get; set; } = new ObservableCollection<TourModel>(); 
+        public ObservableCollection<TourModel> Tours { get; set; } = new ObservableCollection<TourModel>();
 
         public ICommand ShowWindowCommand { get; set; }
 
-        private TourManager _tourManager {get; set;}
+        private TourManager _tourManager { get; set; }
 
         public TourListViewModel(TourManager tourManager)
         {
@@ -51,7 +51,7 @@ namespace tour_planner.ViewModel
                 _selectedTour = value;
                 OnPropertyChanged(nameof(SelectedTour)); // to update entries in data grid
                 if (_selectedTour != null)
-                {                  
+                {
                     // This can be used to update other views when the tour is selected
                     OnTourSelected?.Invoke(this, _selectedTour);
                 }
@@ -64,9 +64,9 @@ namespace tour_planner.ViewModel
 
         private void OpenViewPage(object obj)
         {
-            var dialog = new AddEditTour
+            var dialog = new EditTourView
             {
-                DataContext = new AddEditTourViewModel(_selectedTour, _tourManager,false)
+                DataContext = new EditTourViewModel(_selectedTour, _tourManager, false)
             };
 
             dialog.ShowDialog();
@@ -93,12 +93,12 @@ namespace tour_planner.ViewModel
 
         private void OpenEditTour(object obj)
         {
-            var dialog = new AddEditTour
+            var dialog = new EditTourView
             {
-                DataContext = new AddEditTourViewModel(_selectedTour,_tourManager)
+                DataContext = new EditTourViewModel(_selectedTour, _tourManager)
             };
 
-            if(dialog.ShowDialog() == true)
+            if (dialog.ShowDialog() == true)
             {
                 LoadTours();
             }
@@ -111,10 +111,10 @@ namespace tour_planner.ViewModel
 
         private void OpenAddTour(object obj)
         {
-            TourModel newTour = new TourModel(Guid.NewGuid(),"Name","DD.MM.YYYY","0",0f,"","");
-            var dialog = new AddEditTour()
+            TourModel newTour = new TourModel(Guid.NewGuid(), "Name", "DD.MM.YYYY", "0", 0f, "", "", "", "", "");
+            var dialog = new AddTourView()
             {
-                DataContext = new AddEditTourViewModel(newTour, _tourManager)
+                DataContext = new AddTourViewModel(newTour, _tourManager)
             };
             if (dialog.ShowDialog() == true)
             {
@@ -155,7 +155,7 @@ namespace tour_planner.ViewModel
 
             var tours = await _tourManager.getTours();
             Tours.Clear();
-            foreach(var tour in tours)
+            foreach (var tour in tours)
             {
                 Tours.Add(tour);
             }

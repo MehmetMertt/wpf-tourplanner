@@ -16,17 +16,8 @@ namespace TourPlanner.DAL
 
         public TourDbContext CreateDbContext(string[] args = null) {
 
-            string host = ConfigurationManager.AppSettings["host"];
-            string username = ConfigurationManager.AppSettings["username"];
-            string password = ConfigurationManager.AppSettings["password"];
-            string database = ConfigurationManager.AppSettings["database"];
 
-            if(String.IsNullOrEmpty(host) || String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(database))
-            {
-                throw new Exception("Please fill in the configuration file");
-            } 
-
-            string connectionString = $"Host={host};Username={username};Password={password};Database={database}";
+            string connectionString = $"Host=localhost;Username=user;Password=password;Database=tour_db";
             return new TourDbContext(new DbContextOptionsBuilder().UseNpgsql(connectionString).Options);
         }
     }

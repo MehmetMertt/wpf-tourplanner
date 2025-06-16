@@ -18,9 +18,9 @@ namespace tour_planner.View
     /// <summary>
     /// Interaction logic for AddEditTour.xaml
     /// </summary>
-    public partial class AddEditTour : Window
+    public partial class EditTourView : Window
     {
-        public AddEditTour()
+        public EditTourView()
         {
             InitializeComponent();
             

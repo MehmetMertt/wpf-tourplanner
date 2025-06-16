@@ -10,21 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using tour_planner.ViewModel;
 
 namespace tour_planner.View
 {
     /// <summary>
-    /// Interaction logic for AddEditTourLogsView.xaml
+    /// Interaction logic for AddEditTour.xaml
     /// </summary>
-    public partial class AddEditTourLogsView : Window
+    public partial class AddTourView : Window
     {
-        public AddEditTourLogsView()
+        public AddTourView()
         {
             InitializeComponent();
+            
         }
-
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
@@ -33,7 +33,5 @@ namespace tour_planner.View
             // Begin dragging the window
             this.DragMove();
         }
-
-
     }
 }

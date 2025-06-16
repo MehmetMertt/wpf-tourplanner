@@ -11,10 +11,13 @@ namespace TourPlanner.Domain
         public float TotalDistance { get; set; }
         public string ImagePath { get; set; }
         public string Description { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
+        public string TransportType { get; set; }
         public ObservableCollection<TourLogsModel> TourLogs { get; set; } = new ObservableCollection<TourLogsModel>();
 
 
-        public TourModel(Guid id, string name, string date, string totalDuration, float totalDistance, string imagePath, string description)
+        public TourModel(Guid id, string name, string date, string totalDuration, float totalDistance, string imagePath, string description, string from, string to, string transportType)
         {
             Id = id;
             Name = name;
@@ -23,6 +26,10 @@ namespace TourPlanner.Domain
             TotalDistance = totalDistance;
             ImagePath = imagePath;
             Description = description;
+            From = from;
+            To = to;
+            TransportType = transportType;
+
         }
     }
 }

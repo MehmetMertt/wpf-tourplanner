@@ -20,11 +20,13 @@ using tour_planner.View;
 using System.Text.RegularExpressions;
 using tour_planner.Model;
 using System.Diagnostics;
-using TourPlanner.DAL.Queries;
 using TourPlanner.DAL;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
 using System.Configuration;
+using TourPlanner.DAL.Queries.Tour;
+using TourPlanner.DAL.Queries;
+using TourPlanner.Model;
 
 namespace tour_planner
 {
@@ -33,7 +35,7 @@ namespace tour_planner
     /// </summary>
     /// 
 
- 
+
     /* TODO:
      * changable style/theme maybe
 
@@ -51,6 +53,14 @@ namespace tour_planner
         public UpdateTourQuery _updateTourQuery;
         public GetAllToursQuery _getAllToursQuery;
         public TourManager _tourManager;
+
+
+        public CreateTourLogQuery _createTourLogQuery;
+        public DeleteTourLogQuery _deleteTourLogQuery;
+        public UpdateTourLogQuery _updateTourLogQuery;
+        public GetAllToursLogQuery _getAllToursLogQuery;
+        public GetTourLogsByTourIdQuery _getTourLogsByTourIdQuery;
+        public TourLogsManager _tourLogsManager;
 
         public MainWindow()
         {
@@ -86,10 +96,20 @@ namespace tour_planner
             _tourManager = new TourManager(_createTourQuery, _deleteTourQuery, _updateTourQuery, _getAllToursQuery);
 
 
+
+            _createTourLogQuery = new CreateTourLogQuery(_tourDbContextFactory);
+            _deleteTourLogQuery = new DeleteTourLogQuery(_tourDbContextFactory);
+            _updateTourLogQuery = new UpdateTourLogQuery(_tourDbContextFactory);
+            _getAllToursLogQuery = new GetAllToursLogQuery(_tourDbContextFactory);
+            _getTourLogsByTourIdQuery = new GetTourLogsByTourIdQuery(_tourDbContextFactory);
+
+            _tourLogsManager = new TourLogsManager(_createTourLogQuery, _deleteTourLogQuery, _updateTourLogQuery, _getTourLogsByTourIdQuery);
+
+
             TourListViewModel routeViewModel = new TourListViewModel(_tourManager);
             RoutesView.DataContext = routeViewModel;
 
-            TourLogsViewModel tourLogsViewModel = new TourLogsViewModel(routeViewModel,_tourManager);
+            TourLogsViewModel tourLogsViewModel = new TourLogsViewModel(routeViewModel,_tourLogsManager);
             TourLogsView.DataContext = tourLogsViewModel;
 
 
