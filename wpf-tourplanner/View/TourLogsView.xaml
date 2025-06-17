@@ -112,7 +112,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="*"
-                    Binding="{Binding Date}"
+                    Binding="{Binding DateString}"
                     Header="Date" />
                 <DataGridTextColumn
                     Width="*"

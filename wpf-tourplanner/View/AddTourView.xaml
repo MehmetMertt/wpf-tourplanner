@@ -58,7 +58,7 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 IsEnabled="{Binding IsActionEnabled}"
-                Text="{Binding _copyTour.Name, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding CopyTour.Name, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
                 Grid.Row="2"
@@ -69,7 +69,7 @@
                 Grid.Row="2"
                 Grid.Column="1"
                 IsEnabled="{Binding IsActionEnabled}"
-                Text="{Binding _copyTour.Date, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding CopyTour.Date, UpdateSourceTrigger=PropertyChanged}" />
 
 
             <TextBlock
@@ -81,7 +81,7 @@
                 Grid.Row="5"
                 Grid.Column="1"
                 IsEnabled="{Binding IsActionEnabled}"
-                Text="{Binding _copyTour.Description, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding CopyTour.Description, UpdateSourceTrigger=PropertyChanged}" />
 
 
             <TextBlock
@@ -93,7 +93,7 @@
                 Grid.Row="6"
                 Grid.Column="1"
                 IsEnabled="{Binding IsActionEnabled}"
-                Text="{Binding _copyTour.From, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding CopyTour.From, UpdateSourceTrigger=PropertyChanged}" />
 
 
 
@@ -106,7 +106,7 @@
                 Grid.Row="7"
                 Grid.Column="1"
                 IsEnabled="{Binding IsActionEnabled}"
-                Text="{Binding _copyTour.To, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding CopyTour.To, UpdateSourceTrigger=PropertyChanged}" />
 
 
             <TextBlock
@@ -118,7 +118,7 @@
                 Grid.Row="8"
                 Grid.Column="1"
                 IsEnabled="{Binding IsActionEnabled}"
-                Text="{Binding _copyTour.TransportType, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding CopyTour.TransportType, UpdateSourceTrigger=PropertyChanged}" />
 
 
             <TextBlock
@@ -130,7 +130,7 @@
                 Grid.Row="3"
                 Grid.Column="1"
                 IsEnabled="{Binding IsActionEnabled}"
-                Text="{Binding _copyTour.TotalDuration, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                Text="{Binding CopyTour.TotalDuration, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                 <TextBox.Style>
                     <Style TargetType="TextBox">
                         <Style.Triggers>
@@ -152,7 +152,7 @@
                 Grid.Row="4"
                 Grid.Column="1"
                 IsEnabled="{Binding IsActionEnabled}"
-                Text="{Binding _copyTour.TotalDistance, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                Text="{Binding CopyTour.TotalDistance, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                 <TextBox.Style>
                     <Style TargetType="TextBox">
                         <Style.Triggers>

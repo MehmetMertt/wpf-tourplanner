@@ -12,8 +12,8 @@ using TourPlanner.DAL;
 namespace TourPlanner.DAL.Migrations
 {
     [DbContext(typeof(TourDbContext))]
-    [Migration("20250325220736_Initial")]
-    partial class Initial
+    [Migration("20250616172857_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,10 @@ namespace TourPlanner.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("From")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("text");
@@ -47,10 +51,17 @@ namespace TourPlanner.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("To")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<float>("TotalDistance")
                         .HasColumnType("real");
 
-                    b.Property<string>("TotalDuration")
+                    b.Property<float>("TotalDuration")
+                        .HasColumnType("real");
+
+                    b.Property<string>("TransportType")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -65,8 +76,16 @@ namespace TourPlanner.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Difficulty")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<float>("Distance")
                         .HasColumnType("real");
@@ -74,21 +93,28 @@ namespace TourPlanner.DAL.Migrations
                     b.Property<float>("Duration")
                         .HasColumnType("real");
 
-                    b.Property<Guid?>("TourDtoId")
+                    b.Property<int>("Rating")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("TourId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TourDtoId");
+                    b.HasIndex("TourId");
 
                     b.ToTable("TourLogs");
                 });
 
             modelBuilder.Entity("TourPlanner.DAL.Dto.TourLogsDto", b =>
                 {
-                    b.HasOne("TourPlanner.DAL.Dto.TourDto", null)
+                    b.HasOne("TourPlanner.DAL.Dto.TourDto", "Tour")
                         .WithMany("TourLogs")
-                        .HasForeignKey("TourDtoId");
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tour");
                 });
 
             modelBuilder.Entity("TourPlanner.DAL.Dto.TourDto", b =>

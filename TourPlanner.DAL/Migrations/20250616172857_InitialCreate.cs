@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TourPlanner.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,10 +18,13 @@ namespace TourPlanner.DAL.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Date = table.Column<string>(type: "text", nullable: false),
-                    TotalDuration = table.Column<string>(type: "text", nullable: false),
+                    TotalDuration = table.Column<float>(type: "real", nullable: false),
                     TotalDistance = table.Column<float>(type: "real", nullable: false),
                     ImagePath = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false)
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    From = table.Column<string>(type: "text", nullable: false),
+                    To = table.Column<string>(type: "text", nullable: false),
+                    TransportType = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,22 +39,26 @@ namespace TourPlanner.DAL.Migrations
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Duration = table.Column<float>(type: "real", nullable: false),
                     Distance = table.Column<float>(type: "real", nullable: false),
-                    TourDtoId = table.Column<Guid>(type: "uuid", nullable: true)
+                    Comment = table.Column<string>(type: "text", nullable: false),
+                    Difficulty = table.Column<string>(type: "text", nullable: false),
+                    Rating = table.Column<int>(type: "integer", nullable: false),
+                    TourId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TourLogs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TourLogs_Tours_TourDtoId",
-                        column: x => x.TourDtoId,
+                        name: "FK_TourLogs_Tours_TourId",
+                        column: x => x.TourId,
                         principalTable: "Tours",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TourLogs_TourDtoId",
+                name: "IX_TourLogs_TourId",
                 table: "TourLogs",
-                column: "TourDtoId");
+                column: "TourId");
         }
 
         /// <inheritdoc />

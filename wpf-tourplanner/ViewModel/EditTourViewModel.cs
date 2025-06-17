@@ -82,7 +82,7 @@ namespace tour_planner.ViewModel
 
         private bool CanUpdateTour(object obj)
         {
-            if (_copyTour.TotalDistance > 0 && string.IsNullOrEmpty(_copyTour.TotalDuration) == false && string.IsNullOrEmpty(_copyTour.Name) == false && string.IsNullOrEmpty(_copyTour.Date) == false && IsValidNumeric(_copyTour.TotalDuration) == true && IsValidNumeric(_copyTour.TotalDistance) == true && IsValidDate(_copyTour.Date, "dd.MM.yyyy") == true)
+            if (_copyTour.TotalDistance > 0 && string.IsNullOrEmpty("e") == false && string.IsNullOrEmpty(_copyTour.Name) == false && string.IsNullOrEmpty(_copyTour.Date) == false && IsValidNumeric(_copyTour.TotalDuration) == true && IsValidNumeric(_copyTour.TotalDistance) == true && IsValidDate(_copyTour.Date, "dd.MM.yyyy") == true)
             {
                 return true;
             }
