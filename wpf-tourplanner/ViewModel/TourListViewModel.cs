@@ -111,7 +111,7 @@ namespace tour_planner.ViewModel
 
         private void OpenAddTour(object obj)
         {
-            TourModel newTour = new TourModel(Guid.NewGuid(), "Name", "DD.MM.YYYY", "0", 0f, "", "", "", "", "");
+            TourModel newTour = new TourModel(Guid.NewGuid(), "Name", "DD.MM.YYYY", 0f, 0f, "", "", "", "", "");
             var dialog = new AddTourView()
             {
                 DataContext = new AddTourViewModel(newTour, _tourManager)

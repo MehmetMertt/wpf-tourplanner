@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
@@ -6,13 +7,32 @@ using TourPlanner.Domain;
 
 namespace tour_planner.ViewModel
 {
-    class AddTourViewModel
+    class AddTourViewModel : ViewModelBase
     {
         public TourModel Tour { get; set; }
-        public TourModel _copyTour { get; set; }
+        private TourModel _copyTour { get; set; }
+        public TourModel CopyTour {
+            get => _copyTour;
+            set
+            {
+                if (_copyTour != null)
+                {
+                }
+                _copyTour = value;
+                if (_copyTour != null)
+                {
+                }
+                OnPropertyChanged(nameof(CopyTour));
+            }
+
+        }
+
+
         public ICommand SaveCommand { get; set; }
         public ICommand ToggleActionCommand { get; set; }
         public TourManager _tourManager { get; }
+
+
 
         public AddTourViewModel(TourModel tour, TourManager tourManager, bool _IsActionEnabled = true)
         {
@@ -80,29 +100,10 @@ namespace tour_planner.ViewModel
 
         private bool CanAddTour(object obj)
         {
-            if (_copyTour.TotalDistance > 0 && string.IsNullOrEmpty(_copyTour.TotalDuration) == false && string.IsNullOrEmpty(_copyTour.Name) == false && string.IsNullOrEmpty(_copyTour.Date) == false && IsValidNumeric(_copyTour.TotalDuration) == true && IsValidNumeric(_copyTour.TotalDistance) == true && IsValidDate(_copyTour.Date, "dd.MM.yyyy") == true)
-            {
-                return true;
-            }
-            return false;
+            return !CopyTour.HasErrors;
         }
 
-        private bool IsValidNumeric(object value)
-        {
-            if (value == null) return false;
-
-            if (double.TryParse(value.ToString(), out double result))
-            {
-                return result > 0;
-            }
-            return false;
-        }
-
-        static bool IsValidDate(string dateString, string format)
-        {
-            DateTime tempDate;
-            return DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out tempDate);
-        }
+  
 
     }
 }

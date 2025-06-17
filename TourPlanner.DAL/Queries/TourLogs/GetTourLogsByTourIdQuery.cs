@@ -25,7 +25,7 @@ public class GetTourLogsByTourIdQuery
         return tourLogsModelDtos.Select(log =>
       new TourLogsModel(
           log.Id,
-          log.Date,
+          log.Date.ToUniversalTime(),
           log.Duration,
           log.Distance,
           log.Comment,

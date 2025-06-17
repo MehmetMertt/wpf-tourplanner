@@ -119,7 +119,7 @@ namespace tour_planner.ViewModel
         {
             var dialog = new EditTourLogsView
             {
-                DataContext = new EditTourLogViewModel(SelectedLog, _tourLogsManager, true)
+                DataContext = new EditTourLogViewModel(SelectedLog, _tourLogsManager)
             };
 
             if (dialog.ShowDialog() == true)

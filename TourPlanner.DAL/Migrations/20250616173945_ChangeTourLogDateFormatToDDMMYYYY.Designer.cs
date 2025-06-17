@@ -12,8 +12,8 @@ using TourPlanner.DAL;
 namespace TourPlanner.DAL.Migrations
 {
     [DbContext(typeof(TourDbContext))]
-    [Migration("20250615215207_FixTourForeignKey")]
-    partial class FixTourForeignKey
+    [Migration("20250616173945_ChangeTourLogDateFormatToDDMMYYYY")]
+    partial class ChangeTourLogDateFormatToDDMMYYYY
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,9 +58,8 @@ namespace TourPlanner.DAL.Migrations
                     b.Property<float>("TotalDistance")
                         .HasColumnType("real");
 
-                    b.Property<string>("TotalDuration")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<float>("TotalDuration")
+                        .HasColumnType("real");
 
                     b.Property<string>("TransportType")
                         .IsRequired()
@@ -81,8 +80,9 @@ namespace TourPlanner.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Difficulty")
                         .IsRequired()
@@ -97,10 +97,15 @@ namespace TourPlanner.DAL.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("integer");
 
+                    b.Property<Guid?>("TourDtoId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("TourId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TourDtoId");
 
                     b.HasIndex("TourId");
 
@@ -109,8 +114,12 @@ namespace TourPlanner.DAL.Migrations
 
             modelBuilder.Entity("TourPlanner.DAL.Dto.TourLogsDto", b =>
                 {
-                    b.HasOne("TourPlanner.DAL.Dto.TourDto", "Tour")
+                    b.HasOne("TourPlanner.DAL.Dto.TourDto", null)
                         .WithMany("TourLogs")
+                        .HasForeignKey("TourDtoId");
+
+                    b.HasOne("TourPlanner.DAL.Dto.TourDto", "Tour")
+                        .WithMany()
                         .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

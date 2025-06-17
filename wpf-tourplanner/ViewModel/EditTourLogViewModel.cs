@@ -1,88 +1,104 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
 using TourPlanner.Domain;
-using TourPlanner.Model;
+using TourPlanner.Model; 
 
-internal class EditTourLogViewModel
+namespace tour_planner.ViewModel
 {
-    private TourLogsModel _originalTourLog;
-
-    public TourLogsManager _tourLogsManager { get; }
-
-
-    public TourLogsModel EditableTourLog { get; set; }
-
-    private bool _isActionEnabled;
-    public bool IsActionEnabled
+    public class EditTourLogViewModel : ViewModelBase
     {
-        get => _isActionEnabled;
-        set
+        private TourLogsModel _originalTourLog;
+
+        public TourLogsManager _tourLogsManager { get; }
+
+        private TourLogsModel _editableTourLog;
+        public TourLogsModel EditableTourLog
         {
-            _isActionEnabled = value;
+            get => _editableTourLog;
+            set
+            {
+                if (_editableTourLog == value) return;
+                _editableTourLog = value;
+                OnPropertyChanged(nameof(EditableTourLog));
+            }
         }
-    }
 
-    public ICommand UpdateCommandLog { get; set; }
+        private bool _isActionEnabled;
+        public bool IsActionEnabled
+        {
+            get => _isActionEnabled;
+            set
+            {
+                if (_isActionEnabled == value) return;
+                _isActionEnabled = value;
+                OnPropertyChanged(nameof(IsActionEnabled));
+            }
+        }
 
-    public EditTourLogViewModel(TourLogsModel selectedTourLog, TourLogsManager tourLogsManager, bool isActionEnabled = true)
-    {
-        this.IsActionEnabled = isActionEnabled;
+        public ICommand UpdateCommandLog { get; set; }
+        public ICommand CancelCommandLog { get; set; }
 
-        _tourLogsManager = tourLogsManager;
 
-        // Store the original
-        _originalTourLog = selectedTourLog;
+        public EditTourLogViewModel(TourLogsModel selectedTourLog, TourLogsManager tourLogsManager)
+        {
+            _tourLogsManager = tourLogsManager;
 
-        // Create a copy for editing
-        EditableTourLog = new TourLogsModel(
-            selectedTourLog.Id,
-            selectedTourLog.Date,
-            selectedTourLog.Duration,
-            selectedTourLog.Distance,
-            selectedTourLog.Comment,
-            selectedTourLog.Difficulty,
-            selectedTourLog.Rating,
-            selectedTourLog.TourId
+            _originalTourLog = selectedTourLog;
 
+            EditableTourLog = new TourLogsModel(
+                selectedTourLog.Id,
+                selectedTourLog.Date,
+                selectedTourLog.Duration,
+                selectedTourLog.Distance,
+                selectedTourLog.Comment,
+                selectedTourLog.Difficulty,
+                selectedTourLog.Rating,
+                selectedTourLog.TourId
             );
-
-        UpdateCommandLog = new RelayCommand(DoUpdateTour, CanUpdateTour);
-    }
-
-    private void DoUpdateTour(object obj)
-    {
-
-        // Only when saving, copy the edited values back to the original
-        _originalTourLog.Date = EditableTourLog.Date;
-        _originalTourLog.Duration = EditableTourLog.Duration;
-        _originalTourLog.Distance = EditableTourLog.Distance;
-        _originalTourLog.Comment = EditableTourLog.Comment;
-        _originalTourLog.Difficulty = EditableTourLog.Difficulty;
-        _originalTourLog.Rating = EditableTourLog.Rating;
+           
+            EditableTourLog.DateString = selectedTourLog.Date.ToString("dd.MM.yyyy");
+            EditableTourLog.DurationString = selectedTourLog.Duration.ToString();
+            EditableTourLog.DistanceString = selectedTourLog.Distance.ToString();
 
 
-        if (obj is System.Windows.Window window)
-        {
+            UpdateCommandLog = new RelayCommand(DoUpdateTour, CanUpdateTour);
+            CancelCommandLog = new RelayCommand(DoCancelTourLog, (obj) => true);
 
-
-            _tourLogsManager.UpdateLog(_originalTourLog);
-            window.DialogResult = true;
-            window.Close();
+            IsActionEnabled = true; 
         }
-    }
 
-    private bool CanUpdateTour(object obj)
-    {
-        if (EditableTourLog.Distance > 0 && EditableTourLog.Duration > 0 && IsValidDate(EditableTourLog.Date))
+        private void DoUpdateTour(object obj)
         {
-            return true;
-        }
-        return false;
-    }
+            if (obj is System.Windows.Window window)
+            {
+           
+                _originalTourLog.Date = EditableTourLog.Date;
+                _originalTourLog.Duration = EditableTourLog.Duration;
+                _originalTourLog.Distance = EditableTourLog.Distance;
+                _originalTourLog.Comment = EditableTourLog.Comment;
+                _originalTourLog.Difficulty = EditableTourLog.Difficulty;
+                _originalTourLog.Rating = EditableTourLog.Rating;
 
-    private bool IsValidDate(DateTime date)
-    {
-        return date != DateTime.MinValue && date != DateTime.MaxValue;
+                _tourLogsManager.UpdateLog(_originalTourLog);
+                window.DialogResult = true;
+                window.Close();
+            }
+        }
+
+        private bool CanUpdateTour(object obj)
+        {
+            return !EditableTourLog.HasErrors;
+        }
+
+        private void DoCancelTourLog(object obj)
+        {
+            if (obj is System.Windows.Window window)
+            {
+                window.DialogResult = false;
+                window.Close();
+            }
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace TourPlanner.DAL.Queries
                 TourLogsDto tourDto = new TourLogsDto()
                 {
                     Id = tour.Id,
-                    Date = tour.Date,
+                    Date = tour.Date.ToUniversalTime(),
                     Difficulty = tour.Difficulty,
                     Distance = tour.Distance,
                     Comment = tour.Comment,
