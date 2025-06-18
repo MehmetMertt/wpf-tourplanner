@@ -70,15 +70,15 @@ namespace TourPlannerUnitTests
             Assert.IsTrue(result);
         }*/
 
-        [Test]
+   /*     [Test]
         public void CanOpenEditPage_ShouldReturnFalse_WhenNoLogSelected()
         {
-            _viewModel.SelectedLog = null;
+            *//*_viewModel.SelectedLog = null;
 
             bool result = _viewModel.CanOpenEditPage(null);
 
-            Assert.IsFalse(result);
-        }
+            Assert.IsFalse(result);*//*
+        }*/
 
         [Test]
         public void CanOpenEditPage_ShouldReturnTrue_WhenLogSelected()

@@ -31,7 +31,7 @@ namespace TourPlanner.DAL
             // Ensure Tour Logs have a foreign key to Tours
             modelBuilder.Entity<TourLogsDto>()
                 .HasOne(tl => tl.Tour)
-                .WithMany()
+                .WithMany(t => t.TourLogs) 
                 .HasForeignKey(tl => tl.TourId)
                 .IsRequired();
         }

@@ -36,6 +36,18 @@
                 Command="{Binding OpenEditPage}"
                 Content="✏️"
                 Style="{StaticResource ActionButton}" />
+            <Button
+                Width="40"
+                Margin="10,0,0,0"
+                Command="{Binding DoImport}"
+                Content="📥"
+                Style="{StaticResource ActionButton}" />
+            <Button
+                Width="40"
+                Margin="10,0,0,0"
+                Command="{Binding DoExport}"
+                Content="📤"
+                Style="{StaticResource ActionButton}" />
         </StackPanel>
 
         <TextBlock

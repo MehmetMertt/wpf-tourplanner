@@ -33,7 +33,8 @@ namespace tour_planner.ViewModel
             tour.Description,
             tour.From,
             tour.To,
-            tour.TransportType
+            tour.TransportType,
+            tour.TourLogs
             );
             UpdateCommand = new RelayCommand(DoUpdateTour, CanUpdateTour);
             ToggleActionCommand = new RelayCommand((obj) => IsActionEnabled = !IsActionEnabled, (obj) => true);

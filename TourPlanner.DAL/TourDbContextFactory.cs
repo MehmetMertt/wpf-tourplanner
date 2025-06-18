@@ -10,7 +10,6 @@ namespace TourPlanner.DAL
     public class TourDbContextFactory
     {
 
-        private readonly string _connectionString;
         private readonly DbContextOptions _options;
 
 

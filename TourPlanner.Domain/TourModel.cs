@@ -222,7 +222,7 @@ namespace TourPlanner.Domain
             public ObservableCollection<TourLogsModel> TourLogs { get; set; } = new ObservableCollection<TourLogsModel>();
 
 
-            public TourModel(Guid id, string name, string date, float totalDuration, float totalDistance, string imagePath, string description, string from, string to, string transportType)
+            public TourModel(Guid id, string name, string date, float totalDuration, float totalDistance, string imagePath, string description, string from, string to, string transportType, ObservableCollection<TourLogsModel> tourLogs)
             {
              
                 Id = id;
@@ -235,9 +235,10 @@ namespace TourPlanner.Domain
                 From = from;
                 To = to;
                 TransportType = transportType;
+                TourLogs = tourLogs;
             }
 
-            public TourModel() : this(Guid.NewGuid(), string.Empty, string.Empty, 0, 0, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty)
+            public TourModel() : this(Guid.NewGuid(), string.Empty, string.Empty, 0, 0, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty,new())
             {
             }
         }

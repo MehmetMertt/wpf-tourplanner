@@ -27,6 +27,7 @@ using System.Configuration;
 using TourPlanner.DAL.Queries.Tour;
 using TourPlanner.DAL.Queries;
 using TourPlanner.Model;
+using TourPlanner.BL;
 
 namespace tour_planner
 {
@@ -106,7 +107,11 @@ namespace tour_planner
             _tourLogsManager = new TourLogsManager(_createTourLogQuery, _deleteTourLogQuery, _updateTourLogQuery, _getTourLogsByTourIdQuery);
 
 
-            TourListViewModel routeViewModel = new TourListViewModel(_tourManager);
+            ITourExportService _tourExport = new TourExportService();
+            ITourImportService _tourImport = new TourImportService();
+
+
+            TourListViewModel routeViewModel = new TourListViewModel(_tourManager,_tourExport, _tourImport);
             RoutesView.DataContext = routeViewModel;
 
             TourLogsViewModel tourLogsViewModel = new TourLogsViewModel(routeViewModel,_tourLogsManager);

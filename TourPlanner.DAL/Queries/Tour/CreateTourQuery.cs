@@ -34,7 +34,21 @@ namespace TourPlanner.DAL.Queries.Tour
                     From = tour.From,
                     To = tour.To,
                     TransportType = tour.TransportType,
+                    TourLogs = new System.Collections.ObjectModel.ObservableCollection<TourLogsDto>(
+                     tour.TourLogs.Select(log => new TourLogsDto
+                     {
+                         Id = log.Id,
+                         Date = log.Date,
+                         Duration = log.Duration,
+                         Distance = log.Distance,
+                         Comment = log.Comment,
+                         Difficulty = log.Difficulty,
+                         Rating = log.Rating,
+                         TourId = tour.Id
+                     })
+                 )
                 };
+
 
                 context.Tours.Add(tourDto);
                 await context.SaveChangesAsync();

@@ -1,10 +1,14 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.Win32;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
 using tour_planner.View;
+using TourPlanner.BL;
 using TourPlanner.Domain;
 
 
@@ -18,25 +22,85 @@ namespace tour_planner.ViewModel
 
         private TourManager _tourManager { get; set; }
 
-        public TourListViewModel(TourManager tourManager)
+        private ITourExportService _tourExportService { get; set; }
+
+        public ITourImportService _tourImportService { get; set; }
+
+        public TourListViewModel(TourManager tourManager,ITourExportService exportService,ITourImportService importService)
         {
             _tourManager = tourManager;
             DeleteTourCommand = new RelayCommand(DoDeleteTour, CanDeleteTour);
             OpenAddPage = new RelayCommand(OpenAddTour, CanOpenAddTour);
             OpenEditPage = new RelayCommand(OpenEditTour, CanOpenEditTour);
             OpenDetailsPage = new RelayCommand(OpenViewPage, CanOpenViewPage);
+            DoImport = new RelayCommand(OpenImport,(obj) => true);
+            DoExport = new RelayCommand(OpenExport, CanExport);
+            _tourExportService = exportService;
+            _tourImportService = importService;
+            
             LoadTours();
-            Debug.WriteLine(Tours.ToString());
-            Debug.WriteLine(Tours.ToString());
-            Debug.WriteLine(Tours.ToString());
-            Debug.WriteLine(Tours.ToString());
-            Debug.WriteLine(Tours.ToString());
         }
 
+        private bool CanExport(object obj)
+        {
+           if(_selectedTour != null)
+           {
+                return true;
+           } 
+           return false;
+            
+        }
+        private async void OpenExport(object obj)
+        {
+            if (_selectedTour == null)
+                return;
+
+            try
+            {
+                await _tourExportService.ExportTourAsync(_selectedTour);
+                MessageBox.Show("Export successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Export failed:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void OpenImport(object obj)
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "Tour Log files (*.tourlog)|*.tourlog",
+                Title = "Import Tour Logs"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var filePath = openFileDialog.FileName;
+                var importedTour = _tourImportService.ImportToursAsync(filePath).Result;
+
+                    var newTourId = Guid.NewGuid();
+                    importedTour.Id = newTourId;
+                    foreach(var log in importedTour.TourLogs)
+                    {
+                        log.Id = Guid.NewGuid();
+                        log.TourId = newTourId;
+                    }
+               
+
+                Tours.Add(importedTour);
+                _tourManager.AddTour(importedTour);
+
+
+            }
+        }
+    
 
         public ICommand AddTourCommand { get; set; } // command to link button to a function to add a new tour
         public ICommand DeleteTourCommand { get; set; } // command to link button to a function to delete an existing route 
         public ICommand OpenAddPage { get; set; }
+        public ICommand DoImport { get; set; }
+        public ICommand DoExport { get; set; }
         public ICommand OpenEditPage { get; set; }
         public ICommand OpenDetailsPage { get; set; }
 
@@ -111,7 +175,7 @@ namespace tour_planner.ViewModel
 
         private void OpenAddTour(object obj)
         {
-            TourModel newTour = new TourModel(Guid.NewGuid(), "Name", "DD.MM.YYYY", 0f, 0f, "", "", "", "", "");
+            TourModel newTour = new TourModel(Guid.NewGuid(), "Name", "DD.MM.YYYY", 0f, 0f, "", "", "", "", "",new());
             var dialog = new AddTourView()
             {
                 DataContext = new AddTourViewModel(newTour, _tourManager)
@@ -157,6 +221,7 @@ namespace tour_planner.ViewModel
             Tours.Clear();
             foreach (var tour in tours)
             {
+                Debug.Write($"{tour.Name} has {tour.TourLogs.Count} Logs");
                 Tours.Add(tour);
             }
         }
