@@ -53,7 +53,8 @@ namespace tour_planner.ViewModel
             tour.Description,
             tour.From,
             tour.To,
-            tour.TransportType
+            tour.TransportType,
+            tour.TourLogs
             );
             SaveCommand = new RelayCommand(DoAddTour, CanAddTour);
             ToggleActionCommand = new RelayCommand((obj) => IsActionEnabled = !IsActionEnabled, (obj) => true);

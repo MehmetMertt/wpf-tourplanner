@@ -8,9 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:tour_planner.View"
     Title="Routenplanner"
-    Width="800"
+    Width="1100"
     Height="450"
-    MinWidth="800"
+    MinWidth="1100"
     MinHeight="450"
     Style="{StaticResource CustomWindowStyle}"
     mc:Ignorable="d">

@@ -16,6 +16,6 @@ namespace TourPlanner.DAL.Dto
         public string From { get; set; }
         public string To { get; set; }
         public string TransportType { get; set; }
-        public ObservableCollection<TourLogsDto> TourLogs { get; set; } = new ObservableCollection<TourLogsDto>();
+        public ObservableCollection<TourLogsDto> TourLogs { get; set; } = new();
     }
 }
