@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
@@ -37,7 +38,11 @@ namespace tour_planner.ViewModel
             DoExport = new RelayCommand(OpenExport, CanExport);
             _tourExportService = exportService;
             _tourImportService = importService;
-            
+
+            // set the Filter
+            var view = CollectionViewSource.GetDefaultView(Tours);
+            view.Filter = TourFilter;
+
             LoadTours();
         }
 
@@ -224,6 +229,47 @@ namespace tour_planner.ViewModel
                 Debug.Write($"{tour.Name} has {tour.TourLogs.Count} Logs");
                 Tours.Add(tour);
             }
+            CollectionViewSource.GetDefaultView(Tours).Refresh();
+        }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                CollectionViewSource.GetDefaultView(Tours)?.Refresh(); // update filter
+            }
+        }
+
+        private bool TourFilter(object item)
+        {
+            if (item is not TourModel tour) return false;
+            if (string.IsNullOrWhiteSpace(SearchText)) return true;
+
+            var search = SearchText.Trim().ToLower();
+
+            bool matchesTour = (tour.Name?.ToLower().Contains(search) ?? false)               // filter by tour attributes
+                || (tour.Date?.ToLower().Contains(search) ?? false)
+                || tour.TotalDuration.ToString(CultureInfo.InvariantCulture).Contains(search)
+                || tour.TotalDistance.ToString(CultureInfo.InvariantCulture).Contains(search)
+                || (tour.Description?.ToLower().Contains(search) ?? false)
+                || (tour.From?.ToLower().Contains(search) ?? false)
+                || (tour.To?.ToLower().Contains(search) ?? false)
+                || (tour.TransportType?.ToLower().Contains(search) ?? false);
+
+            bool matchesLog = tour.TourLogs.Any(log =>                                  // filter by tourlog attributes
+                (log.Comment?.ToLower().Contains(search) ?? false)
+                || (log.Difficulty?.ToLower().Contains(search) ?? false)
+                || log.Rating.ToString().Contains(search)
+                || log.Distance.ToString(CultureInfo.InvariantCulture).Contains(search)
+                || log.Duration.ToString(CultureInfo.InvariantCulture).Contains(search)
+                || log.Date.ToString("dd.MM.yyyy").Contains(search)
+            );
+
+            return matchesTour || matchesLog;
         }
     }
 }
