@@ -1,12 +1,11 @@
-version: '3.9'
-
 services:
   postgres:
     image: postgres:latest
+    restart: always
     ports:
       - 5432:5432
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=user
@@ -22,3 +21,6 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=admin
     depends_on:
       - postgres
+
+volumes:
+  db_data:
