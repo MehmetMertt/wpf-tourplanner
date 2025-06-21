@@ -13,23 +13,18 @@ namespace TourPlanner.BL
 {
     public class TourExportService : ITourExportService
     {
-        public Task ExportTourAsync(TourModel tour) //,TourLogsModel tourlogs
+        public Task ExportTourAsync(TourModel tour)
         {
-            //     Debug.Write(tour.TourLogs[0].Id);
-            Debug.Write($"TOURLOGS: {tour.TourLogs}, ENDE");
-            Debug.Write($"TOURLOGS: {tour.TourLogs[0].Comment}, ENDE");
-            string tourfileContent = JsonSerializer.Serialize(tour);
-            // string tourlogfileContent = JsonSerializer.Serialize(tourlogs);
-            //string wholeFileContent = tourfileContent + tourlogfileContent;
+       //     Debug.Write(tour.TourLogs[0].Id);
+            string fileContent = JsonSerializer.Serialize(tour);
             string fileName = $"{tour.Name}_{tour.Date}.tourlog";
             string currentFolder = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             string filePath = System.IO.Path.Combine(currentFolder, fileName);
 
             using (FileStream fs = File.Create(filePath, 1024))
             {
-                byte[] tourinfo = new UTF8Encoding(true).GetBytes(tourfileContent);
-                //byte[] tourinfo = new UTF8Encoding(true).GetBytes(wholeFileContent);
-                fs.Write(tourinfo, 0, tourinfo.Length);
+                byte[] info = new UTF8Encoding(true).GetBytes(fileContent);
+                fs.Write(info, 0, info.Length);
             }
             return Task.CompletedTask;
         }

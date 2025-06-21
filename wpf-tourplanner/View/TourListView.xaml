@@ -12,7 +12,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -55,17 +54,10 @@
             Grid.Row="1"
             FontWeight="Bold"
             Foreground="White"
-            Text="Search Tours" />
-
-        <TextBox
-            Grid.Row="2"
-            Margin="0,5,0,5"
-            Height="20"
-            VerticalAlignment="Center"
-            Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+            Text="Tours" />
 
         <ListView
-            Grid.Row="3"
+            Grid.Row="2"
             Background="Transparent"
             BorderThickness="0"
             ItemsSource="{Binding Tours}"
