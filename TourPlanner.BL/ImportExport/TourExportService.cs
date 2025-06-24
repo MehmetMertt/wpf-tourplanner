@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 using TourPlanner.Domain;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace TourPlanner.BL
+namespace TourPlanner.BL.ImportExport
 {
     public class TourExportService : ITourExportService
     {
         public Task ExportTourAsync(TourModel tour)
         {
-       //     Debug.Write(tour.TourLogs[0].Id);
+            //     Debug.Write(tour.TourLogs[0].Id);
             string fileContent = JsonSerializer.Serialize(tour);
             string fileName = $"{tour.Name}_{tour.Date}.tourlog";
             string currentFolder = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string filePath = System.IO.Path.Combine(currentFolder, fileName);
+            string filePath = Path.Combine(currentFolder, fileName);
 
             using (FileStream fs = File.Create(filePath, 1024))
             {

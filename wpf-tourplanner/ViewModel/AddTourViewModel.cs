@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
+using TourPlanner.BL.OpenRouteServiceAPI;
 using TourPlanner.Domain;
 
 namespace tour_planner.ViewModel
@@ -75,28 +77,42 @@ namespace tour_planner.ViewModel
 
 
 
-        private void DoAddTour(object obj)
+        private async void DoAddTour(object obj)
         {
-            Tour.Description = _copyTour.Description;
-            Tour.To = _copyTour.To;
-            Tour.From = _copyTour.From;
-            Tour.TransportType = _copyTour.TransportType;
-            Tour.ImagePath = _copyTour.ImagePath;
-            Tour.Name = _copyTour.Name;
-            Tour.Date = _copyTour.Date;
-            Tour.TotalDistance = _copyTour.TotalDistance;
-            Tour.TotalDuration = _copyTour.TotalDuration;
-
-
-
-            if (obj is System.Windows.Window window)
+            try
             {
-                _tourManager.AddTour(Tour);
-                window.DialogResult = true;
-                window.Close();
-            }
+                Tour.Description = _copyTour.Description;
+                Tour.To = _copyTour.To;
+                Tour.From = _copyTour.From;
+                Tour.TransportType = _copyTour.TransportType;
+                Tour.ImagePath = _copyTour.ImagePath;
+                Tour.Name = _copyTour.Name;
+                Tour.Date = _copyTour.Date;
 
+                OpenRouteServiceClient osc = OpenRouteServiceClient.Instanz;
+                (float distance, float duration) = await osc.GetTimeDistance(VehicleProfile.DrivingCar, Tour);
+                Tour.TotalDistance = distance;
+                Tour.TotalDuration = duration;
+
+                if (obj is System.Windows.Window window)
+                {
+                    _tourManager.AddTour(Tour);
+                    window.DialogResult = true;
+                    window.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Failed to add the tour. Reason: " + ex.Message,
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+
+            }
         }
+
 
 
         private bool CanAddTour(object obj)

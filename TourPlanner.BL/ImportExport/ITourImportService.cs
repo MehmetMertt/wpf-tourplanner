@@ -1,6 +1,6 @@
 ﻿using TourPlanner.Domain;
 
-namespace TourPlanner.BL
+namespace TourPlanner.BL.ImportExport
 {
     public interface ITourImportService
     {

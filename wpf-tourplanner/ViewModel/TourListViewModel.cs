@@ -9,7 +9,7 @@ using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
 using tour_planner.View;
-using TourPlanner.BL;
+using TourPlanner.BL.ImportExport;
 using TourPlanner.Domain;
 
 
@@ -26,6 +26,7 @@ namespace tour_planner.ViewModel
         private ITourExportService _tourExportService { get; set; }
 
         public ITourImportService _tourImportService { get; set; }
+
 
         public TourListViewModel(TourManager tourManager,ITourExportService exportService,ITourImportService importService)
         {
@@ -110,6 +111,7 @@ namespace tour_planner.ViewModel
         public ICommand OpenDetailsPage { get; set; }
 
         public event EventHandler<TourModel> OnTourSelected;
+        public event EventHandler TourDeselected;
 
         private TourModel _selectedTour;
         public virtual TourModel SelectedTour
@@ -121,9 +123,14 @@ namespace tour_planner.ViewModel
                 OnPropertyChanged(nameof(SelectedTour)); // to update entries in data grid
                 if (_selectedTour != null)
                 {
-                    // This can be used to update other views when the tour is selected
+                    TourDeselected?.Invoke(this, EventArgs.Empty);
                     OnTourSelected?.Invoke(this, _selectedTour);
                 }
+                else
+                {
+                    TourDeselected?.Invoke(this, EventArgs.Empty);
+                }
+
             }
 
 

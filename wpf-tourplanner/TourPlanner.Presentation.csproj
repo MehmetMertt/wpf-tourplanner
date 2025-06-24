@@ -10,11 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="map.html" />
     <None Remove="Ressources\maximize.svg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="map.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GMap.NET.WinPresentation" Version="2.1.7" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3344-prerelease" />
     <PackageReference Include="SVGImage" Version="3.0.0" />
   </ItemGroup>
 

@@ -39,21 +39,14 @@
 
         <!--  Main Content Area  -->
         <StackPanel Grid.Column="3" Margin="5,5,5,5">
-            <Border
-                Height="200"
-                Margin="5"
-                Background="LightGray">
-                <gmaps:GMapControl
-                    x:Name="mapView"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Loaded="mapView_Loaded" />
+
+            <Border Height="200" Background="Gray">
+                <views:MapView x:Name="MapViewControl" />
             </Border>
 
-
             <views:TourLogsView x:Name="TourLogsView" />
-
         </StackPanel>
+
     </Grid>
 
 

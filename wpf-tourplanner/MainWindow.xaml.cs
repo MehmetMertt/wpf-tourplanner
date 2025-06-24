@@ -1,52 +1,25 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using GMap.NET;
-using GMap.NET.MapProviders;
-using GMap.NET.WindowsPresentation;
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using tour_planner.ViewModel;
 using tour_planner.View;
-
-using System.Text.RegularExpressions;
 using tour_planner.Model;
-using System.Diagnostics;
 using TourPlanner.DAL;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
 using System.Configuration;
 using TourPlanner.DAL.Queries.Tour;
 using TourPlanner.DAL.Queries;
 using TourPlanner.Model;
 using TourPlanner.BL;
+using TourPlanner.BL.ImportExport;
 
 namespace tour_planner
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    /// 
-
-
-    /* TODO:
-     * changable style/theme maybe
-
-     */
-
-
     public partial class MainWindow : Window
     {
         private TourListViewModel tourListViewModel;
         private TourLogsViewModel tourLogsViewModel;
+        public MapViewModel mapViewModel { get; set; }
+
 
         private readonly TourDbContextFactory _tourDbContextFactory;
         public CreateTourQuery _createTourQuery;
@@ -63,14 +36,16 @@ namespace tour_planner
         public GetTourLogsByTourIdQuery _getTourLogsByTourIdQuery;
         public TourLogsManager _tourLogsManager;
 
+
         public MainWindow()
         {
             InitializeComponent();
+            InitializeAsync();
 
-            string host = ConfigurationManager.AppSettings["host"];
-            string username = ConfigurationManager.AppSettings["username"];
-            string password = ConfigurationManager.AppSettings["password"];
-            string database = ConfigurationManager.AppSettings["database"];
+            string host = AppSettingsManager.GetSetting("host");
+            string username = AppSettingsManager.GetSetting("username");
+            string password = AppSettingsManager.GetSetting("password");
+            string database = AppSettingsManager.GetSetting("database");
 
             if (String.IsNullOrEmpty(host) || String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(database))
             {
@@ -110,15 +85,26 @@ namespace tour_planner
             ITourExportService _tourExport = new TourExportService();
             ITourImportService _tourImport = new TourImportService();
 
+            mapViewModel = new MapViewModel();
 
-            TourListViewModel routeViewModel = new TourListViewModel(_tourManager,_tourExport, _tourImport);
-            RoutesView.DataContext = routeViewModel;
+            tourListViewModel = new TourListViewModel(_tourManager,_tourExport, _tourImport);
+            RoutesView.DataContext = tourListViewModel;
 
-            TourLogsViewModel tourLogsViewModel = new TourLogsViewModel(routeViewModel,_tourLogsManager);
+            tourLogsViewModel = new TourLogsViewModel(tourListViewModel, _tourLogsManager);
             TourLogsView.DataContext = tourLogsViewModel;
 
+            MapViewControl.DataContext = mapViewModel;
 
+            tourListViewModel.OnTourSelected += (s, tour) =>
+            {
+                if (tour != null)
+                    mapViewModel.ShowRouteFromTour(tour);
+            };
 
+            tourListViewModel.TourDeselected += (s, e) =>
+            {
+                mapViewModel.ResetMap();
+            };
 
         }
 
@@ -146,23 +132,21 @@ namespace tour_planner
             SystemCommands.MinimizeWindow(this);
         }
 
-        private void DragWindow(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private async void ShowRouteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void DragWindow(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             this.DragMove(); // Enables window dragging
+
         }
         #endregion
 
-        private void mapView_Loaded(object sender, RoutedEventArgs e)
+
+        private async void InitializeAsync()
         {
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
-            mapView.MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance;
-            mapView.MinZoom = 12;
-            mapView.MaxZoom = 17;
-            mapView.Zoom = 12;
-            mapView.Position = new PointLatLng(48.239166, 16.377441); //technikum wien
-            mapView.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-            mapView.CanDragMap = true;
-            mapView.DragButton = MouseButton.Left;
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
