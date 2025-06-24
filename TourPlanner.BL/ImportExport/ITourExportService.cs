@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TourPlanner.Domain;
 
-namespace TourPlanner.BL
+namespace TourPlanner.BL.ImportExport
 {
     public interface ITourExportService
     {

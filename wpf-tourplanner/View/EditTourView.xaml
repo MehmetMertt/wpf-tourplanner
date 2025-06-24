@@ -79,41 +79,20 @@
             <TextBox
                 Grid.Row="3"
                 Grid.Column="1"
-                IsEnabled="{Binding IsActionEnabled}"
-                Text="{Binding _copyTour.TotalDuration, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                <TextBox.Style>
-                    <Style TargetType="TextBox">
-                        <Style.Triggers>
-                            <Trigger Property="Validation.HasError" Value="True">
-                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
-                                <Setter Property="BorderBrush" Value="Red" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
+                IsEnabled="False"
+                Text="{Binding _copyTour.TotalDuration, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0} Hours}" />
 
             <TextBlock
                 Grid.Row="4"
                 Grid.Column="0"
                 Foreground="White"
                 Text="Distance:" />
+
             <TextBox
                 Grid.Row="4"
                 Grid.Column="1"
-                IsEnabled="{Binding IsActionEnabled}"
-                Text="{Binding _copyTour.TotalDistance, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                <TextBox.Style>
-                    <Style TargetType="TextBox">
-                        <Style.Triggers>
-                            <Trigger Property="Validation.HasError" Value="True">
-                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
-                                <Setter Property="BorderBrush" Value="Red" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
+                IsEnabled="False"
+                Text="{Binding _copyTour.TotalDistance, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, StringFormat={}{0} Km}" />
 
 
             <TextBlock
