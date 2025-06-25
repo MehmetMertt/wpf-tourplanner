@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
+using tour_planner.View;
 using TourPlanner.BL.OpenRouteServiceAPI;
 using TourPlanner.Domain;
 
@@ -34,10 +36,11 @@ namespace tour_planner.ViewModel
         public ICommand ToggleActionCommand { get; set; }
         public TourManager _tourManager { get; }
 
+        private MainWindow _mainWindow;
 
-
-        public AddTourViewModel(TourModel tour, TourManager tourManager, bool _IsActionEnabled = true)
+        public AddTourViewModel(TourModel tour, TourManager tourManager, MainWindow mainWindow, bool _IsActionEnabled = true)
         {
+            _mainWindow = mainWindow;
 
             // Create a copy for editing
 
@@ -94,6 +97,11 @@ namespace tour_planner.ViewModel
                 Tour.TotalDistance = distance;
                 Tour.TotalDuration = duration;
 
+                string filename = $"{Tour.Name.Replace(" ", "_")}_{DateTime.Now:yyyyMMdd_HHmmss}";
+                _mainWindow.mapViewModel.ShowRouteFromTour(Tour);
+                await Task.Delay(5000); // webview could not take any longer to load the map :P
+                Tour.ImagePath = await _mainWindow.CaptureMapScreenshotAsync(filename);
+
                 if (obj is System.Windows.Window window)
                 {
                     _tourManager.AddTour(Tour);
@@ -109,7 +117,6 @@ namespace tour_planner.ViewModel
                     MessageBoxButton.OK,
                     MessageBoxImage.Error
                 );
-
             }
         }
 

@@ -87,7 +87,7 @@ namespace tour_planner
 
             mapViewModel = new MapViewModel();
 
-            tourListViewModel = new TourListViewModel(_tourManager,_tourExport, _tourImport);
+            tourListViewModel = new TourListViewModel(_tourManager,_tourExport, _tourImport, this);
             RoutesView.DataContext = tourListViewModel;
 
             tourLogsViewModel = new TourLogsViewModel(tourListViewModel, _tourLogsManager);
@@ -157,7 +157,10 @@ namespace tour_planner
             this.DragMove();
         }
 
+        public async Task<string> CaptureMapScreenshotAsync(string filename)
+        {
+            return await MapViewControl.SaveMapScreenshotAsync(filename);
+        }
 
-    
     }
 }
