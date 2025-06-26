@@ -13,16 +13,14 @@ namespace TourPlannerUnitTests
         private TourModel _tourModel;
 
         [SetUp]
-/*        public void Setup()
+       public void Setup()
         {
             // public TourModel(Guid id, string name, string date, string totalDuration, float totalDistance, string imagePath, string description)
 
             _mockTourListViewModel = new Mock<TourListViewModel>();
-            _tourModel = new TourModel(Guid.NewGuid(), "Wien Tour", "01.01.1990", "19h", 0f, "", "");
+            _tourModel = new TourModel(Guid.NewGuid(), "Wien Tour", "01.01.1990", 3.2f, 1.2f, "", "Wien Tour mit dem Auto","Wien","Wiener Neudorf","Auto",new());
 
-            _mockTourListViewModel.Setup(m => m.SelectedTour).Returns(_tourModel);
-            _viewModel = new TourLogsViewModel(_mockTourListViewModel.Object);
-        }*/
+        }
 
         [Test]
         public void Constructor_ShouldInitializeTourLogs()
@@ -31,22 +29,13 @@ namespace TourPlannerUnitTests
             Assert.AreEqual(0, _viewModel.TourLogs.Count);
         }
 
-/*        [Test]
-        public void SelectedTour_Setter_ShouldUpdateTourLogs()
+        [Test]
+        public void InvalidDate_ModelShouldHaveErrors()
         {
-            var newTour = new TourModel
-            {
-                Name = "New Tour",
-                TourLogs = new ObservableCollection<TourLogsModel>
-            {
-                new TourLogsModel(DateTime.Now, 10, 20)
-            }
-            };
+            _tourModel.Date = "01.01.19990";
 
-            _viewModel.SelectedTour = newTour;
-
-            Assert.AreEqual(1, _viewModel.TourLogs.Count);
-        }*/
+            Assert.IsTrue(_tourModel.HasErrors);
+        }
 
 /*        [Test]
         public void CanOpenNewPage_ShouldReturnFalse_WhenNoTourSelected()

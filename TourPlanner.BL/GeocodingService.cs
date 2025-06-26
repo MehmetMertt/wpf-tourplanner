@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using log4net;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
+using TourPlanner.BL.OpenRouteServiceAPI;
 
 namespace TourPlanner.BL
 {
@@ -36,6 +38,8 @@ namespace TourPlanner.BL
 
     public class GeocodingService
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(RouteRequest));
+
         private readonly HttpClient _httpClient;
         private const string NominatimBaseUrl = "https://nominatim.openstreetmap.org/search";
 
@@ -83,7 +87,7 @@ namespace TourPlanner.BL
                     if (double.TryParse(firstResult.LatitudeString, NumberStyles.Float, CultureInfo.InvariantCulture, out double lat) &&
                         double.TryParse(firstResult.LongitudeString, NumberStyles.Float, CultureInfo.InvariantCulture, out double lon))
                     {
-                        Console.WriteLine($"Found coordinates for {firstResult.DisplayName}: Lat={lat}, Lon={lon}");
+                        log.Info($"Found coordinates for {firstResult.DisplayName}: Lat={lat}, Lon={lon}");
                         return new Coordinates(lat, lon);
                     }
                     else
@@ -94,22 +98,24 @@ namespace TourPlanner.BL
                 }
                 else
                 {
-                    Console.WriteLine($"No coordinates found for '{cityName}'.");
+                    log.Warn($"No coordinates found for '{cityName}' ");
                     return null;
                 }
             }
             catch (HttpRequestException ex)
             {
+                log.Warn($"HTTP Request is not possible (possible server downtime): {requestUrl}");
                 Console.WriteLine($"HTTP Request Error: {ex.Message}");
                 return null;
             }
             catch (Newtonsoft.Json.JsonException ex)
             {
-                Console.WriteLine($"JSON Deserialization Error: {ex.Message}");
+                log.Fatal($"Json Body of request is invalid: {ex.Message}");
                 return null;
             }
             catch (Exception ex)
             {
+                log.Warn($"An unexpected error occurred: {ex.Message}");
                 Console.WriteLine($"An unexpected error occurred: {ex.Message}");
                 return null;
             }

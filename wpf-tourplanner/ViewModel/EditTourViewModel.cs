@@ -1,15 +1,20 @@
-﻿using System.Globalization;
+﻿using log4net;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
 using TourPlanner.BL.OpenRouteServiceAPI;
+using TourPlanner.DAL.Queries;
 using TourPlanner.Domain;
 
 namespace tour_planner.ViewModel
 {
+
+
     class EditTourViewModel
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(CreateTourLogQuery));
         public TourModel Tour { get; set; }
         public TourModel _copyTour { get; set; }
         public ICommand UpdateCommand { get; set; }
@@ -60,7 +65,12 @@ namespace tour_planner.ViewModel
         {
             try
             {
+                if(obj is TourModel)
+                {
+                    log.Info($"User tries to update Tour with {obj}");
+                }
                 // Copy values from backup
+               
                 Tour.Description = _copyTour.Description;
                 Tour.To = _copyTour.To;
                 Tour.From = _copyTour.From;
@@ -82,6 +92,7 @@ namespace tour_planner.ViewModel
                     window.DialogResult = true;
                     window.Close();
                 }
+                log.Info($"Tour {Tour.Name} successfully updates");
             }
             catch (Exception ex)
             {

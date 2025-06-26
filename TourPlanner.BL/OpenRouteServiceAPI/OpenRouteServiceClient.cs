@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace TourPlanner.BL.OpenRouteServiceAPI
 
     public class RouteRequest
     {
+
+
         [JsonPropertyName("coordinates")]
         public List<List<double>> Coordinates { get; set; }
 
@@ -28,6 +31,8 @@ namespace TourPlanner.BL.OpenRouteServiceAPI
 
     public class OpenRouteServiceClient
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(RouteRequest));
+
 
         private static OpenRouteServiceClient _instance = null;
 
@@ -74,6 +79,15 @@ namespace TourPlanner.BL.OpenRouteServiceAPI
 
                 if (fromCoords == null || toCoords == null)
                 {
+                    if(fromCoords == null)
+                    {
+                        log.Error($"From Coordinates for {tour.From} are null");
+                    }
+                    if(toCoords == null)
+                    {
+                        log.Error($"To Coordinates for {tour.To} are null");
+
+                    }
                     throw new Exception("Failed to retrieve coordinates for one or both locations.");
                 }
 
@@ -98,6 +112,7 @@ namespace TourPlanner.BL.OpenRouteServiceAPI
                 if (!response.IsSuccessStatusCode)
                 {
                     string errorMsg = await response.Content.ReadAsStringAsync();
+                    log.Error($"Http Request to {_url} failed using request body {json} with statuscode: {response.StatusCode} and error message {errorMsg}");
                     throw new HttpRequestException($"API call failed: {response.StatusCode}, {errorMsg}");
                 }
 
@@ -113,6 +128,7 @@ namespace TourPlanner.BL.OpenRouteServiceAPI
             }
             catch (HttpRequestException ex)
             {
+                log.Error($"API {_url} not available.");
                 throw new Exception("Route Service is down (contact admin): " + ex.Message, ex); 
             }
             catch (Exception ex)

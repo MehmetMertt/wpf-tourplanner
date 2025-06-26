@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using log4net;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -17,6 +18,8 @@ namespace tour_planner.ViewModel
 {
     public class TourListViewModel : ViewModelBase
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(TourListViewModel));
+
         public ObservableCollection<TourModel> Tours { get; set; } = new ObservableCollection<TourModel>();
 
         public ICommand ShowWindowCommand { get; set; }
@@ -58,8 +61,12 @@ namespace tour_planner.ViewModel
         }
         private async void OpenExport(object obj)
         {
+            log.Info("User tries to export Tour");
             if (_selectedTour == null)
+            {
+                log.Info("Exporting failed because no Tour was selected");
                 return;
+            }
 
             try
             {
@@ -74,6 +81,7 @@ namespace tour_planner.ViewModel
 
         private void OpenImport(object obj)
         {
+            log.Info("User tries to import Logs");
             var openFileDialog = new OpenFileDialog
             {
                 Filter = "Tour Log files (*.tourlog)|*.tourlog",
@@ -83,6 +91,7 @@ namespace tour_planner.ViewModel
             if (openFileDialog.ShowDialog() == true)
             {
                 var filePath = openFileDialog.FileName;
+                log.Info($"User selected file: {filePath} ");
                 var importedTour = _tourImportService.ImportToursAsync(filePath).Result;
 
                     var newTourId = Guid.NewGuid();
@@ -96,6 +105,7 @@ namespace tour_planner.ViewModel
 
                 Tours.Add(importedTour);
                 _tourManager.AddTour(importedTour);
+                log.Warn("Importing Logs successfully");
 
 
             }

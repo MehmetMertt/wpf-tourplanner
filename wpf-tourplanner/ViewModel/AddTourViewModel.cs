@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using log4net;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
@@ -11,6 +12,8 @@ namespace tour_planner.ViewModel
 {
     class AddTourViewModel : ViewModelBase
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(RouteRequest));
+
         public TourModel Tour { get; set; }
         private TourModel _copyTour { get; set; }
         public TourModel CopyTour {
@@ -79,8 +82,10 @@ namespace tour_planner.ViewModel
 
         private async void DoAddTour(object obj)
         {
+
             try
             {
+                log.Info("User trying to add tour");
                 Tour.Description = _copyTour.Description;
                 Tour.To = _copyTour.To;
                 Tour.From = _copyTour.From;
@@ -100,15 +105,17 @@ namespace tour_planner.ViewModel
                     window.DialogResult = true;
                     window.Close();
                 }
+                log.Info("User added Tour successfully");
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 MessageBox.Show(
-                    "Failed to add the tour. Reason: " + ex.Message,
+                    "Failed to add the tour. Reason: " + e.Message,
                     "Error",
                     MessageBoxButton.OK,
                     MessageBoxImage.Error
                 );
+                log.Warn($"Adding Tour failed: {e}");
 
             }
         }

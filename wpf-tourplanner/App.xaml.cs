@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows;
 
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "log4net.config")]
 namespace tour_planner
 {
     /// <summary>

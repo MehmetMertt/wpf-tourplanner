@@ -11,6 +11,8 @@ using TourPlanner.DAL.Queries;
 using TourPlanner.Model;
 using TourPlanner.BL;
 using TourPlanner.BL.ImportExport;
+using log4net;
+
 
 namespace tour_planner
 {
@@ -28,19 +30,21 @@ namespace tour_planner
         public GetAllToursQuery _getAllToursQuery;
         public TourManager _tourManager;
 
-
         public CreateTourLogQuery _createTourLogQuery;
         public DeleteTourLogQuery _deleteTourLogQuery;
         public UpdateTourLogQuery _updateTourLogQuery;
         public GetAllToursLogQuery _getAllToursLogQuery;
         public GetTourLogsByTourIdQuery _getTourLogsByTourIdQuery;
         public TourLogsManager _tourLogsManager;
+        private static readonly ILog log = LogManager.GetLogger(typeof(MainWindow));
 
 
         public MainWindow()
         {
-            InitializeComponent();
+        InitializeComponent();
             InitializeAsync();
+
+            log.Info("test");
 
             string host = AppSettingsManager.GetSetting("host");
             string username = AppSettingsManager.GetSetting("username");
