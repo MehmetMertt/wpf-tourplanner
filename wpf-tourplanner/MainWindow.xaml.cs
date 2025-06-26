@@ -106,6 +106,8 @@ namespace tour_planner
                 mapViewModel.ResetMap();
             };
 
+            QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community; // to be able to use questpdf for report generation
+
         }
 
 

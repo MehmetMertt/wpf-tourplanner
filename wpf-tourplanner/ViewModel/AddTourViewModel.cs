@@ -34,6 +34,7 @@ namespace tour_planner.ViewModel
 
         public ICommand SaveCommand { get; set; }
         public ICommand ToggleActionCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
         public TourManager _tourManager { get; }
 
         private MainWindow _mainWindow;
@@ -63,6 +64,7 @@ namespace tour_planner.ViewModel
             );
             SaveCommand = new RelayCommand(DoAddTour, CanAddTour);
             ToggleActionCommand = new RelayCommand((obj) => IsActionEnabled = !IsActionEnabled, (obj) => true);
+            CancelCommand = new RelayCommand(DoCancel, CanCancel);
             IsActionEnabled = _IsActionEnabled;
         }
 
@@ -127,7 +129,18 @@ namespace tour_planner.ViewModel
             return !CopyTour.HasErrors;
         }
 
-  
+        private void DoCancel(object obj)
+        {
+            if (obj is System.Windows.Window window)
+            {
+                window.DialogResult = false;
+                window.Close();
+            }
+        }
+
+        private bool CanCancel(object obj) => true;
+
+
 
     }
 }
