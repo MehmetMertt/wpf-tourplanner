@@ -37,11 +37,11 @@ namespace tour_planner.ViewModel
         public ICommand CancelCommand { get; set; }
         public TourManager _tourManager { get; }
 
-        private MainWindow _mainWindow;
+        private readonly MapView _mapViewControl;
 
-        public AddTourViewModel(TourModel tour, TourManager tourManager, MainWindow mainWindow, bool _IsActionEnabled = true)
+        public AddTourViewModel(TourModel tour, TourManager tourManager, MapView mapViewControl, bool _IsActionEnabled = true)
         {
-            _mainWindow = mainWindow;
+            _mapViewControl = mapViewControl;
 
             // Create a copy for editing
 
@@ -100,9 +100,9 @@ namespace tour_planner.ViewModel
                 Tour.TotalDuration = duration;
 
                 string filename = $"{Tour.Name.Replace(" ", "_")}_{DateTime.Now:yyyyMMdd_HHmmss}";
-                _mainWindow.mapViewModel.ShowRouteFromTour(Tour);
+                ((MapViewModel)_mapViewControl.DataContext).ShowRouteFromTour(Tour);
                 await Task.Delay(5000); // webview could not take any longer to load the map :P
-                Tour.ImagePath = await _mainWindow.CaptureMapScreenshotAsync(filename);
+                Tour.ImagePath = await _mapViewControl.SaveMapScreenshotAsync(filename);
 
                 if (obj is System.Windows.Window window)
                 {
