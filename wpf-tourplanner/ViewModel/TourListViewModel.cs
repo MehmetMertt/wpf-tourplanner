@@ -27,9 +27,10 @@ namespace tour_planner.ViewModel
 
         public ITourImportService _tourImportService { get; set; }
 
-
-        public TourListViewModel(TourManager tourManager,ITourExportService exportService,ITourImportService importService)
+        private readonly MapView _mapViewControl;
+        public TourListViewModel(TourManager tourManager,ITourExportService exportService,ITourImportService importService, MapView mapViewControl)
         {
+            _mapViewControl = mapViewControl;
             _tourManager = tourManager;
             DeleteTourCommand = new RelayCommand(DoDeleteTour, CanDeleteTour);
             OpenAddPage = new RelayCommand(OpenAddTour, CanOpenAddTour);
@@ -142,7 +143,7 @@ namespace tour_planner.ViewModel
         {
             var dialog = new EditTourView
             {
-                DataContext = new EditTourViewModel(_selectedTour, _tourManager, false)
+                DataContext = new EditTourViewModel(_selectedTour, _tourManager, _mapViewControl ,false)
             };
 
             dialog.ShowDialog();
@@ -171,7 +172,7 @@ namespace tour_planner.ViewModel
         {
             var dialog = new EditTourView
             {
-                DataContext = new EditTourViewModel(_selectedTour, _tourManager)
+                DataContext = new EditTourViewModel(_selectedTour, _tourManager, _mapViewControl)
             };
 
             if (dialog.ShowDialog() == true)
@@ -190,7 +191,7 @@ namespace tour_planner.ViewModel
             TourModel newTour = new TourModel(Guid.NewGuid(), "Name", "DD.MM.YYYY", 0f, 0f, "", "", "", "", "",new());
             var dialog = new AddTourView()
             {
-                DataContext = new AddTourViewModel(newTour, _tourManager)
+                DataContext = new AddTourViewModel(newTour, _tourManager, _mapViewControl)
             };
             if (dialog.ShowDialog() == true)
             {

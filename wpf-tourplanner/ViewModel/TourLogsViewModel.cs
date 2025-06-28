@@ -5,12 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
+using Microsoft.Win32;
 using tour_planner.Commands;
 using tour_planner.Model;
 using tour_planner.View;
 using tour_planner.ViewModel;
 using TourPlanner.Domain;
 using TourPlanner.Model;
+using TourPlanner.BL.ReportGeneration;
 
 namespace tour_planner.ViewModel
 {
@@ -62,6 +64,7 @@ namespace tour_planner.ViewModel
         public ICommand OpenEditPage { get; set; }
         public ICommand OpenNewPage { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand SaveReport { get; set; }
 
         public TourLogsViewModel(TourListViewModel tourListViewModel, TourLogsManager tourLogsManager)
         {
@@ -72,6 +75,7 @@ namespace tour_planner.ViewModel
             OpenEditPage = new RelayCommand(DoOpenEditPage, CanOpenEditPage);
             OpenNewPage = new RelayCommand(DoOpenNewPage, CanOpenNewPage);
             DeleteCommand = new RelayCommand(DoDelete, CanDelete);
+            SaveReport = new RelayCommand(DoGenerateReport, CanGenerateReport);
 
             tourListViewModel.OnTourSelected += HandleTourSelected;
 
@@ -141,5 +145,48 @@ namespace tour_planner.ViewModel
         }
 
         private bool CanDelete(object obj) => SelectedLog != null;
+
+        private void DoGenerateReport(object obj)
+        {
+            var dialog = new SaveFileDialog
+            {
+                Filter = "PDF files (*.pdf)|*.pdf",
+                FileName = SelectedTour != null
+                    ? $"{SelectedTour.Name.Replace(" ", "_")}_report{DateTime.Now:yyyyMMdd_HHmmss}.pdf"
+                    : $"Summary_Report_{DateTime.Now:yyyyMMdd_HHmmss}.pdf"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    if (SelectedTour != null) // if a tour is selected make normal report for that tour
+                    {
+                        TourReportGenerator.GenerateTourReport(SelectedTour, dialog.FileName);
+                    }
+                    else // if no tour is selected make summary report for all tours
+                    {
+                        var allTours = TourListViewModel.Tours.ToList();
+
+                        SummaryReportGenerator.GenerateSummaryReport(allTours, dialog.FileName);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show(
+                        $"Error with report generation:\n{ex.Message}",
+                        "Erro",
+                        System.Windows.MessageBoxButton.OK,
+                        System.Windows.MessageBoxImage.Error
+                    );
+                }
+            }
+        }
+
+        private bool CanGenerateReport(object obj)
+        {
+            // generate report if a tour is selected or if there are any tours in the list 
+            return SelectedTour != null || TourListViewModel.Tours.Any();
+        }
     }
 }

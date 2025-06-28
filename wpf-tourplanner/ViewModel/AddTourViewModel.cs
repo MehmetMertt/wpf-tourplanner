@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
+using tour_planner.View;
 using TourPlanner.BL.OpenRouteServiceAPI;
 using TourPlanner.Domain;
 
@@ -32,12 +34,14 @@ namespace tour_planner.ViewModel
 
         public ICommand SaveCommand { get; set; }
         public ICommand ToggleActionCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
         public TourManager _tourManager { get; }
 
+        private readonly MapView _mapViewControl;
 
-
-        public AddTourViewModel(TourModel tour, TourManager tourManager, bool _IsActionEnabled = true)
+        public AddTourViewModel(TourModel tour, TourManager tourManager, MapView mapViewControl, bool _IsActionEnabled = true)
         {
+            _mapViewControl = mapViewControl;
 
             // Create a copy for editing
 
@@ -60,6 +64,7 @@ namespace tour_planner.ViewModel
             );
             SaveCommand = new RelayCommand(DoAddTour, CanAddTour);
             ToggleActionCommand = new RelayCommand((obj) => IsActionEnabled = !IsActionEnabled, (obj) => true);
+            CancelCommand = new RelayCommand(DoCancel, CanCancel);
             IsActionEnabled = _IsActionEnabled;
         }
 
@@ -94,6 +99,11 @@ namespace tour_planner.ViewModel
                 Tour.TotalDistance = distance;
                 Tour.TotalDuration = duration;
 
+                string filename = $"{Tour.Name.Replace(" ", "_")}_{DateTime.Now:yyyyMMdd_HHmmss}";
+                ((MapViewModel)_mapViewControl.DataContext).ShowRouteFromTour(Tour);
+                await Task.Delay(5000); // webview could not take any longer to load the map :P
+                Tour.ImagePath = await _mapViewControl.SaveMapScreenshotAsync(filename);
+
                 if (obj is System.Windows.Window window)
                 {
                     _tourManager.AddTour(Tour);
@@ -109,7 +119,6 @@ namespace tour_planner.ViewModel
                     MessageBoxButton.OK,
                     MessageBoxImage.Error
                 );
-
             }
         }
 
@@ -120,7 +129,18 @@ namespace tour_planner.ViewModel
             return !CopyTour.HasErrors;
         }
 
-  
+        private void DoCancel(object obj)
+        {
+            if (obj is System.Windows.Window window)
+            {
+                window.DialogResult = false;
+                window.Close();
+            }
+        }
+
+        private bool CanCancel(object obj) => true;
+
+
 
     }
 }
