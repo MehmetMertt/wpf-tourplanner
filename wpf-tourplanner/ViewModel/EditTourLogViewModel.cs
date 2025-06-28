@@ -1,7 +1,9 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Windows.Input;
 using tour_planner.Commands;
 using tour_planner.Model;
+using TourPlanner.DAL.Queries;
 using TourPlanner.Domain;
 using TourPlanner.Model; 
 
@@ -10,6 +12,7 @@ namespace tour_planner.ViewModel
     public class EditTourLogViewModel : ViewModelBase
     {
         private TourLogsModel _originalTourLog;
+        private static readonly ILog log = LogManager.GetLogger(typeof(EditTourLogViewModel));
 
         public TourLogsManager _tourLogsManager { get; }
 
@@ -71,6 +74,7 @@ namespace tour_planner.ViewModel
 
         private void DoUpdateTour(object obj)
         {
+            log.Info($"User tries to edit tour log {_originalTourLog.Id}");
             if (obj is System.Windows.Window window)
             {
            
@@ -85,6 +89,8 @@ namespace tour_planner.ViewModel
                 window.DialogResult = true;
                 window.Close();
             }
+            log.Info($"User successfully updated tour log {_originalTourLog.Id}");
+
         }
 
         private bool CanUpdateTour(object obj)

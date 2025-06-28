@@ -1,6 +1,8 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Windows.Input;
 using tour_planner.Commands;
+using TourPlanner.DAL.Queries;
 using TourPlanner.Domain;
 using TourPlanner.Model; 
 
@@ -9,6 +11,8 @@ namespace tour_planner.ViewModel
    
     public class AddTourLogViewModel : ViewModelBase 
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(CreateTourLogQuery));
+
         public TourLogsManager _tourLogsManager { get; }
 
         private TourLogsModel _editableTourLog; 
@@ -54,8 +58,7 @@ namespace tour_planner.ViewModel
 
         private void DoAddTour(object obj)
         {
-     
-
+            log.Info("User tries to add TourLog");
             if (obj is System.Windows.Window window)
             {
                 
@@ -63,11 +66,12 @@ namespace tour_planner.ViewModel
                 window.DialogResult = true; 
                 window.Close();
             }
+            log.Info("Successfully added TourLog");
         }
 
         private bool CanAddTour(object obj)
         {
-   
+        
             return !EditableTourLog.HasErrors;
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -10,14 +11,17 @@ using tour_planner.Commands;
 using tour_planner.Model;
 using tour_planner.View;
 using tour_planner.ViewModel;
+using TourPlanner.DAL.Queries;
 using TourPlanner.Domain;
 using TourPlanner.Model;
 using TourPlanner.BL.ReportGeneration;
 
 namespace tour_planner.ViewModel
 {
+
     public class TourLogsViewModel : ViewModelBase
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(CreateTourLogQuery));
         private TourModel _selectedTour;
         private readonly TourLogsManager _tourLogsManager;
         private ObservableCollection<TourLogsModel> _tourLogs;
@@ -89,6 +93,7 @@ namespace tour_planner.ViewModel
         {
             var logs = await _tourLogsManager.GetLogsForTour(tourId);
             TourLogs.Clear();
+            log.Info($"Loaded {logs.Count} Tour Logs for Tour with id: {tourId}");
 
             foreach (var log in logs)
             {
@@ -99,7 +104,7 @@ namespace tour_planner.ViewModel
 
         private void HandleTourSelected(object sender, TourModel selectedTour)
         {
-            Debug.WriteLine($"Selected Tour: {selectedTour.Name}");
+            log.Info($"User selected new Tour: {selectedTour.Name}");
             SelectedTour = selectedTour;
         }
 
@@ -111,6 +116,7 @@ namespace tour_planner.ViewModel
                 DataContext = new AddTourLogViewModel(newLog, _tourLogsManager)
             };
 
+            log.Info("User opened New Tour Log page");
             if (dialog.ShowDialog() == true)
             {
                 TourLogs.Add(newLog);
@@ -125,6 +131,7 @@ namespace tour_planner.ViewModel
             {
                 DataContext = new EditTourLogViewModel(SelectedLog, _tourLogsManager)
             };
+            log.Info("User opened Edit Tour Log Page");
 
             if (dialog.ShowDialog() == true)
             {
@@ -136,11 +143,27 @@ namespace tour_planner.ViewModel
 
         private void DoDelete(object obj)
         {
-            if (SelectedLog != null)
+            try
             {
-                var selectedLogId = SelectedLog.Id;
-                TourLogs.Remove(SelectedLog);
-                _tourLogsManager.DeleteLog(selectedLogId); 
+                if (SelectedLog != null)
+                {
+                    var selectedLogId = SelectedLog.Id;
+                    TourLogs.Remove(SelectedLog);
+               
+                    _tourLogsManager.DeleteLog(selectedLogId);
+
+                    log.Info($"Tour Log with the id: {selectedLogId} deleted successfully from the database");
+                } else
+                {
+                    log.Warn("Tried to delete Tour Log without selecting log");
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                log.Fatal("Unexpected behaviour while deleting log level: " + e);
+
             }
         }
 
