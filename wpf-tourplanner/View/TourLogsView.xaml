@@ -19,6 +19,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button
                 Grid.Column="0"
@@ -44,7 +45,14 @@
                 Command="{Binding OpenEditPage}"
                 Content="✏️"
                 Style="{StaticResource ActionButton}" />
-
+            <Button
+                Grid.Column="3"
+                Width="50"
+                Height="20"
+                HorizontalAlignment="Center"
+                Command="{Binding SaveReport}"
+                Content="PDF"
+                Style="{StaticResource ActionButton}" />
         </Grid>
         <DataGrid
             Name="datagrid"

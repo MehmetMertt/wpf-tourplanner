@@ -90,5 +90,24 @@ namespace tour_planner.View
                 }
             }
         }
+
+        public async Task<string> SaveMapScreenshotAsync(string filename)
+        {
+            var imageDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TourImages");
+            Directory.CreateDirectory(imageDir);
+
+            var filepath = Path.Combine(imageDir, filename + ".png");
+
+            using (var stream = new MemoryStream())
+            {
+                await mapView.CoreWebView2.CapturePreviewAsync(
+                    Microsoft.Web.WebView2.Core.CoreWebView2CapturePreviewImageFormat.Png,
+                    stream
+                );
+                File.WriteAllBytes(filepath, stream.ToArray());
+            }
+
+            return filepath;
+        }
     }
 }

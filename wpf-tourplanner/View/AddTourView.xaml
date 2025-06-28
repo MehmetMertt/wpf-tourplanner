@@ -130,7 +130,11 @@
                 IsEnabled="{Binding IsActionEnabled}"
                 Style="{StaticResource DarkThemeButton}" />
 
-            <Button Content="Cancel" Style="{StaticResource DarkThemeButton}" />
+            <Button 
+                Content="Cancel"
+                Command="{Binding CancelCommand}" 
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" 
+                Style="{StaticResource DarkThemeButton}" />
         </StackPanel>
 
     </StackPanel>

@@ -91,13 +91,13 @@ namespace tour_planner
 
             mapViewModel = new MapViewModel();
 
-            tourListViewModel = new TourListViewModel(_tourManager,_tourExport, _tourImport);
+            MapViewControl.DataContext = mapViewModel;
+
+            tourListViewModel = new TourListViewModel(_tourManager,_tourExport, _tourImport, MapViewControl);
             RoutesView.DataContext = tourListViewModel;
 
             tourLogsViewModel = new TourLogsViewModel(tourListViewModel, _tourLogsManager);
             TourLogsView.DataContext = tourLogsViewModel;
-
-            MapViewControl.DataContext = mapViewModel;
 
             tourListViewModel.OnTourSelected += (s, tour) =>
             {
@@ -109,6 +109,8 @@ namespace tour_planner
             {
                 mapViewModel.ResetMap();
             };
+
+            QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community; // to be able to use questpdf for report generation
 
         }
 
@@ -160,8 +162,5 @@ namespace tour_planner
             // Begin dragging the window
             this.DragMove();
         }
-
-
-    
     }
 }
