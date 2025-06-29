@@ -24,6 +24,24 @@ namespace tour_planner.ViewModel
         public ICommand CancelCommand { get; set; }
         public string FromWeatherForecast { get; set; }
         public string ToWeatherForecast { get; set; }
+        public string FromWeatherIcon { get; set; }
+        public string ToWeatherIcon { get; set; }
+        public string WeatherTip
+        {
+            get
+            {
+                string allForecasts = (FromWeatherForecast ?? "") + " " + (ToWeatherForecast ?? "");
+                if (allForecasts.Contains("rain"))
+                    return "Dont forget to take an umbrella 🌂";
+                if (allForecasts.Contains("clear") && allForecasts.Contains("hot"))
+                    return "Stay hydrated 💧";
+                if (allForecasts.Contains("clear"))
+                    return "Dont forget sun protection 🧴";
+                if (allForecasts.Contains("snow"))
+                    return "Dress warmly! ❄️";
+                return "";
+            }
+        }
         public TourManager _tourManager { get; }
 
         private MapView _mapViewControl;
@@ -149,15 +167,32 @@ namespace tour_planner.ViewModel
         private async Task UpdateFromWeatherAsync()
         {
             var client = OpenWeatherServiceClient.Instance;
-            FromWeatherForecast = await client.GetForecastSummary(_copyTour.From, _copyTour.Date);
+            var summary = await client.GetForecastSummary(_copyTour.From, _copyTour.Date);
+            FromWeatherForecast = summary;
+            FromWeatherIcon = ChooseWeatherIcon(summary);
             OnPropertyChanged(nameof(FromWeatherForecast));
+            OnPropertyChanged(nameof(FromWeatherIcon));
+            OnPropertyChanged(nameof(WeatherTip));
         }
 
         private async Task UpdateToWeatherAsync()
         {
             var client = OpenWeatherServiceClient.Instance;
-            ToWeatherForecast = await client.GetForecastSummary(_copyTour.To, _copyTour.Date);
+            var summary = await client.GetForecastSummary(_copyTour.To, _copyTour.Date);
+            ToWeatherForecast = summary;
+            ToWeatherIcon = ChooseWeatherIcon(summary);
             OnPropertyChanged(nameof(ToWeatherForecast));
+            OnPropertyChanged(nameof(ToWeatherIcon));
+            OnPropertyChanged(nameof(WeatherTip));
+        }
+
+        private string ChooseWeatherIcon(string summary)
+        {
+            if (summary.Contains("rain")) return "🌧️";
+            if (summary.Contains("snow")) return "❄️";
+            if (summary.Contains("clear")) return "☀️";
+            if (summary.Contains("cloud")) return "☁️";
+            return "🌡️";
         }
     }
 }

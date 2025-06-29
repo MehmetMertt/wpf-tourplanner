@@ -21,7 +21,7 @@
     </WindowChrome.WindowChrome>
     <StackPanel VerticalAlignment="Center">
 
-        <Grid Margin="20,10,20,10">
+        <Grid Margin="20,0,20,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -130,13 +130,37 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="From-weather: " Foreground="White"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FromWeatherForecast}" Foreground="White"/>
+            <TextBlock 
+                Grid.Row="0" 
+                Grid.Column="0" 
+                Text="From-weather: " 
+                Foreground="White"/>
+            <TextBlock 
+                Grid.Row="0" 
+                Grid.Column="1" 
+                Text="{Binding FromWeatherForecast}" 
+                Foreground="White"/>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="To-weather: " Foreground="White"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding ToWeatherForecast}" Foreground="White"/>
+            <TextBlock 
+                Grid.Row="1" 
+                Grid.Column="0" 
+                Text="To-weather: " 
+                Foreground="White"/>
+            <TextBlock 
+                Grid.Row="1" 
+                Grid.Column="1" 
+                Text="{Binding ToWeatherForecast}" 
+                Foreground="White"/>
+
+            <TextBlock 
+                Grid.Row="2" 
+                Grid.ColumnSpan="2"
+                Text="{Binding WeatherTip}"
+                Foreground="#7058fc"/>
+
         </Grid>
 
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
