@@ -6,6 +6,7 @@ using tour_planner.Commands;
 using tour_planner.Model;
 using tour_planner.View;
 using TourPlanner.BL.OpenRouteServiceAPI;
+using TourPlanner.BL.OpenWeatherMapAPI;
 using TourPlanner.DAL.Queries;
 using TourPlanner.Domain;
 
@@ -13,7 +14,7 @@ namespace tour_planner.ViewModel
 {
 
 
-    class EditTourViewModel
+    class EditTourViewModel : ViewModelBase
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(CreateTourLogQuery));
         public TourModel Tour { get; set; }
@@ -21,6 +22,8 @@ namespace tour_planner.ViewModel
         public ICommand UpdateCommand { get; set; }
         public ICommand ToggleActionCommand { get; set; }
         public ICommand CancelCommand { get; set; }
+        public string FromWeatherForecast { get; set; }
+        public string ToWeatherForecast { get; set; }
         public TourManager _tourManager { get; }
 
         private MapView _mapViewControl;
@@ -50,6 +53,17 @@ namespace tour_planner.ViewModel
             ToggleActionCommand = new RelayCommand((obj) => IsActionEnabled = !IsActionEnabled, (obj) => true);
             CancelCommand = new RelayCommand(DoCancel, CanCancel);
             IsActionEnabled = _IsActionEnabled;
+
+            if (_copyTour != null)
+            {
+                _copyTour.PropertyChanged += async (s, e) =>
+                {
+                    if (e.PropertyName == nameof(_copyTour.From))
+                        await UpdateFromWeatherAsync();
+                    else if (e.PropertyName == nameof(_copyTour.To))
+                        await UpdateToWeatherAsync();
+                };
+            }
         }
 
 
@@ -131,5 +145,19 @@ namespace tour_planner.ViewModel
         }
 
         private bool CanCancel(object obj) => true;
+
+        private async Task UpdateFromWeatherAsync()
+        {
+            var client = OpenWeatherServiceClient.Instance;
+            FromWeatherForecast = await client.GetForecastSummary(_copyTour.From, _copyTour.Date);
+            OnPropertyChanged(nameof(FromWeatherForecast));
+        }
+
+        private async Task UpdateToWeatherAsync()
+        {
+            var client = OpenWeatherServiceClient.Instance;
+            ToWeatherForecast = await client.GetForecastSummary(_copyTour.To, _copyTour.Date);
+            OnPropertyChanged(nameof(ToWeatherForecast));
+        }
     }
 }

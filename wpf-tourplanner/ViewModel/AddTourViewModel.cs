@@ -1,6 +1,5 @@
 using log4net;
 using System.ComponentModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
@@ -10,6 +9,7 @@ using tour_planner.Model;
 using tour_planner.View;
 using TourPlanner.BL.OpenRouteServiceAPI;
 using TourPlanner.Domain;
+using TourPlanner.BL.OpenWeatherMapAPI;
 
 namespace tour_planner.ViewModel
 {
@@ -39,6 +39,8 @@ namespace tour_planner.ViewModel
         public ICommand SaveCommand { get; set; }
         public ICommand ToggleActionCommand { get; set; }
         public ICommand CancelCommand { get; set; }
+        public string FromWeatherForecast { get; set; }
+        public string ToWeatherForecast { get; set; }
         public TourManager _tourManager { get; }
 
         private readonly MapView _mapViewControl;
@@ -70,6 +72,17 @@ namespace tour_planner.ViewModel
             ToggleActionCommand = new RelayCommand((obj) => IsActionEnabled = !IsActionEnabled, (obj) => true);
             CancelCommand = new RelayCommand(DoCancel, CanCancel);
             IsActionEnabled = _IsActionEnabled;
+
+            if (_copyTour != null)
+            {
+                _copyTour.PropertyChanged += async (s, e) =>
+                {
+                    if (e.PropertyName == nameof(CopyTour.From))
+                        await UpdateFromWeatherAsync();
+                    else if (e.PropertyName == nameof(CopyTour.To))
+                        await UpdateToWeatherAsync();
+                };
+            }
         }
 
 
@@ -149,7 +162,18 @@ namespace tour_planner.ViewModel
 
         private bool CanCancel(object obj) => true;
 
+        private async Task UpdateFromWeatherAsync()
+        {
+            var client = OpenWeatherServiceClient.Instance;
+            FromWeatherForecast = await client.GetForecastSummary(CopyTour.From, CopyTour.Date);
+            OnPropertyChanged(nameof(FromWeatherForecast));
+        }
 
-
+        private async Task UpdateToWeatherAsync()
+        {
+            var client = OpenWeatherServiceClient.Instance;
+            ToWeatherForecast = await client.GetForecastSummary(CopyTour.To, CopyTour.Date);
+            OnPropertyChanged(nameof(ToWeatherForecast));
+        }
     }
 }
