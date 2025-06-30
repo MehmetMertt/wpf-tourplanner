@@ -9,6 +9,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="TourPlanner.Tests" />
+	</ItemGroup>
+	
   <ItemGroup>
     <None Remove="map.html" />
     <None Remove="Ressources\maximize.svg" />

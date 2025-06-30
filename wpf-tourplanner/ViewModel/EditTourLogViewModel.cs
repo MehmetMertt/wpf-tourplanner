@@ -14,7 +14,7 @@ namespace tour_planner.ViewModel
         private TourLogsModel _originalTourLog;
         private static readonly ILog log = LogManager.GetLogger(typeof(EditTourLogViewModel));
 
-        public TourLogsManager _tourLogsManager { get; }
+        public ITourLogsManager _tourLogsManager { get; }
 
         private TourLogsModel _editableTourLog;
         public TourLogsModel EditableTourLog
@@ -44,7 +44,7 @@ namespace tour_planner.ViewModel
         public ICommand CancelCommandLog { get; set; }
 
 
-        public EditTourLogViewModel(TourLogsModel selectedTourLog, TourLogsManager tourLogsManager)
+        public EditTourLogViewModel(TourLogsModel selectedTourLog, ITourLogsManager tourLogsManager)
         {
             _tourLogsManager = tourLogsManager;
 
@@ -77,21 +77,21 @@ namespace tour_planner.ViewModel
             log.Info($"User tries to edit tour log {_originalTourLog.Id}");
             if (obj is System.Windows.Window window)
             {
-           
-                _originalTourLog.Date = EditableTourLog.Date;
-                _originalTourLog.Duration = EditableTourLog.Duration;
-                _originalTourLog.Distance = EditableTourLog.Distance;
-                _originalTourLog.Comment = EditableTourLog.Comment;
-                _originalTourLog.Difficulty = EditableTourLog.Difficulty;
-                _originalTourLog.Rating = EditableTourLog.Rating;
+                _originalTourLog
+                    .WithDate(EditableTourLog.Date)
+                    .WithDuration(EditableTourLog.Duration)
+                    .WithDistance(EditableTourLog.Distance)
+                    .WithComment(EditableTourLog.Comment)
+                    .WithDifficulty(EditableTourLog.Difficulty)
+                    .WithRating(EditableTourLog.Rating);
 
                 _tourLogsManager.UpdateLog(_originalTourLog);
                 window.DialogResult = true;
                 window.Close();
             }
             log.Info($"User successfully updated tour log {_originalTourLog.Id}");
-
         }
+
 
         private bool CanUpdateTour(object obj)
         {

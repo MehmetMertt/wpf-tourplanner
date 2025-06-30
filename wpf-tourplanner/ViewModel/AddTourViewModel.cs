@@ -10,6 +10,7 @@ using tour_planner.View;
 using TourPlanner.BL.OpenRouteServiceAPI;
 using TourPlanner.Domain;
 using TourPlanner.BL.OpenWeatherMapAPI;
+using System.Collections.ObjectModel;
 
 namespace tour_planner.ViewModel
 {
@@ -59,11 +60,11 @@ namespace tour_planner.ViewModel
                 return "";
             }
         }
-        public TourManager _tourManager { get; }
+        public ITourManager _tourManager { get; }
 
         private readonly MapView _mapViewControl;
 
-        public AddTourViewModel(TourModel tour, TourManager tourManager, MapView mapViewControl, bool _IsActionEnabled = true)
+        public AddTourViewModel(TourModel tour, ITourManager tourManager, MapView mapViewControl, bool _IsActionEnabled = true)
         {
             _mapViewControl = mapViewControl;
 
@@ -73,19 +74,19 @@ namespace tour_planner.ViewModel
 
 
             Tour = tour;
-            _copyTour = new TourModel(
-                tour.Id,
-                tour.Name,
-                tour.Date,
-            tour.TotalDuration,
-            tour.TotalDistance,
-            tour.ImagePath,
-            tour.Description,
-            tour.From,
-            tour.To,
-            tour.TransportType,
-            tour.TourLogs
-            );
+            _copyTour = new TourModel()
+    .WithId(tour.Id)
+    .WithName(tour.Name)
+    .WithDate(tour.Date)
+    .WithDuration(tour.TotalDuration)
+    .WithDistance(tour.TotalDistance)
+    .WithImagePath(tour.ImagePath)
+    .WithDescription(tour.Description)
+    .WithFrom(tour.From)
+    .WithTo(tour.To)
+    .WithTransportType(tour.TransportType)
+    .WithTourLogs(new ObservableCollection<TourLogsModel>(tour.TourLogs));
+
             SaveCommand = new RelayCommand(DoAddTour, CanAddTour);
             ToggleActionCommand = new RelayCommand((obj) => IsActionEnabled = !IsActionEnabled, (obj) => true);
             CancelCommand = new RelayCommand(DoCancel, CanCancel);

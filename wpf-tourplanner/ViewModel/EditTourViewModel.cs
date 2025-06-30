@@ -1,5 +1,5 @@
 ﻿using log4net;
-using System.Globalization;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using tour_planner.Commands;
@@ -42,11 +42,11 @@ namespace tour_planner.ViewModel
                 return "";
             }
         }
-        public TourManager _tourManager { get; }
+        public ITourManager _tourManager { get; }
 
         private MapView _mapViewControl;
 
-        public EditTourViewModel(TourModel tour, TourManager tourManager, MapView mapViewControl, bool _IsActionEnabled = true)
+        public EditTourViewModel(TourModel tour, ITourManager tourManager, MapView mapViewControl, bool _IsActionEnabled = true)
         {
 
             _mapViewControl = mapViewControl;
@@ -54,19 +54,19 @@ namespace tour_planner.ViewModel
 
 
             Tour = tour;
-            _copyTour = new TourModel(
-                tour.Id,
-                tour.Name,
-                tour.Date,
-            tour.TotalDuration,
-            tour.TotalDistance,
-            tour.ImagePath,
-            tour.Description,
-            tour.From,
-            tour.To,
-            tour.TransportType,
-            tour.TourLogs
-            );
+            _copyTour = new TourModel()
+    .WithId(tour.Id)
+    .WithName(tour.Name)
+    .WithDate(tour.Date)
+    .WithDuration(tour.TotalDuration)
+    .WithDistance(tour.TotalDistance)
+    .WithImagePath(tour.ImagePath)
+    .WithDescription(tour.Description)
+    .WithFrom(tour.From)
+    .WithTo(tour.To)
+    .WithTransportType(tour.TransportType)
+    .WithTourLogs(new ObservableCollection<TourLogsModel>(tour.TourLogs));
+
             UpdateCommand = new RelayCommand(DoUpdateTour, CanUpdateTour);
             ToggleActionCommand = new RelayCommand((obj) => IsActionEnabled = !IsActionEnabled, (obj) => true);
             CancelCommand = new RelayCommand(DoCancel, CanCancel);
@@ -102,12 +102,12 @@ namespace tour_planner.ViewModel
         {
             try
             {
-                if(obj is TourModel)
+                if (obj is TourModel)
                 {
                     log.Info($"User tries to update Tour with {obj}");
                 }
                 // Copy values from backup
-               
+
                 Tour.Description = _copyTour.Description;
                 Tour.To = _copyTour.To;
                 Tour.From = _copyTour.From;
@@ -186,7 +186,7 @@ namespace tour_planner.ViewModel
             OnPropertyChanged(nameof(WeatherTip));
         }
 
-        private string ChooseWeatherIcon(string summary)
+        internal string ChooseWeatherIcon(string summary)
         {
             if (summary.Contains("rain")) return "🌧️";
             if (summary.Contains("snow")) return "❄️";

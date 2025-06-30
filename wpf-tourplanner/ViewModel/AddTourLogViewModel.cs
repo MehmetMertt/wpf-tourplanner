@@ -13,7 +13,7 @@ namespace tour_planner.ViewModel
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(CreateTourLogQuery));
 
-        public TourLogsManager _tourLogsManager { get; }
+        public ITourLogsManager _tourLogsManager { get; }
 
         private TourLogsModel _editableTourLog; 
         public TourLogsModel EditableTourLog
@@ -43,7 +43,7 @@ namespace tour_planner.ViewModel
         public ICommand CancelCommandLog { get; set; }
 
 
-        public AddTourLogViewModel(TourLogsModel newLog, TourLogsManager tourLogsManager)
+        public AddTourLogViewModel(TourLogsModel newLog, ITourLogsManager tourLogsManager)
         {
             _tourLogsManager = tourLogsManager;
 

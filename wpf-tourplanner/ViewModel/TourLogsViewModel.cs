@@ -23,7 +23,7 @@ namespace tour_planner.ViewModel
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(CreateTourLogQuery));
         private TourModel _selectedTour;
-        private readonly TourLogsManager _tourLogsManager;
+        private readonly ITourLogsManager _tourLogsManager;
         private ObservableCollection<TourLogsModel> _tourLogs;
         private TourLogsModel _selectedLog;
 
@@ -70,7 +70,7 @@ namespace tour_planner.ViewModel
         public ICommand DeleteCommand { get; set; }
         public ICommand SaveReport { get; set; }
 
-        public TourLogsViewModel(TourListViewModel tourListViewModel, TourLogsManager tourLogsManager)
+        public TourLogsViewModel(TourListViewModel tourListViewModel, ITourLogsManager tourLogsManager)
         {
             _tourLogsManager = tourLogsManager;
             TourLogs = new ObservableCollection<TourLogsModel>();
