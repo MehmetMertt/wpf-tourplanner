@@ -5,7 +5,7 @@ using TourPlanner.Domain;
 
 namespace TourPlanner.Model
 {
-    public class TourLogsManager
+    public class TourLogsManager : ITourLogsManager
     {
         private readonly CreateTourLogQuery _createTourLogQuery;
         private readonly DeleteTourLogQuery _deleteTourLogQuery;
@@ -35,7 +35,7 @@ namespace TourPlanner.Model
         public async void AddLogToTour(Guid tourId, TourLogsModel log)
         {
             log.TourId = tourId;
-            await _createTourLogQuery.Execute(log,tourId);
+            await _createTourLogQuery.Execute(log, tourId);
         }
 
         public async void UpdateLog(TourLogsModel log)

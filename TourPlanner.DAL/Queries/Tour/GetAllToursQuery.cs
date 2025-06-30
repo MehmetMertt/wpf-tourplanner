@@ -23,19 +23,32 @@ namespace TourPlanner.DAL.Queries.Tour
                 .Include(t => t.TourLogs)
                 .ToListAsync();
 
-                return tourModelDtos.Select(t => new TourModel(t.Id, t.Name, t.Date, t.TotalDuration, t.TotalDistance, t.ImagePath, t.Description,t.From,t.To,t.TransportType,
-                    new ObservableCollection<TourLogsModel>(
-                    t.TourLogs.Select(log => new TourLogsModel(
-                        log.Id,
-                        log.Date,
-                        log.Duration,
-                        log.Distance,
-                        log.Comment,
-                        log.Difficulty,
-                        log.Rating,
-                        log.TourId
-                    ))
-                )));
+                return tourModelDtos.Select(t =>
+     new TourModel()
+         .WithId(t.Id)
+         .WithName(t.Name)
+         .WithDate(t.Date)
+         .WithDuration(t.TotalDuration)
+         .WithDistance(t.TotalDistance)
+         .WithImagePath(t.ImagePath)
+         .WithDescription(t.Description)
+         .WithFrom(t.From)
+         .WithTo(t.To)
+         .WithTransportType(t.TransportType)
+         .WithTourLogs(new ObservableCollection<TourLogsModel>(
+             t.TourLogs.Select(log => new TourLogsModel()
+                 .WithId(log.Id)
+                 .WithDate(log.Date)
+                 .WithDuration(log.Duration)
+                 .WithDistance(log.Distance)
+                 .WithComment(log.Comment)
+                 .WithDifficulty(log.Difficulty)
+                 .WithRating(log.Rating)
+                 .WithTourId(log.TourId)
+             )
+         ))
+ );
+
 
             }
         }

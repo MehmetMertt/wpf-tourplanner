@@ -24,14 +24,14 @@ namespace tour_planner.ViewModel
 
         public ICommand ShowWindowCommand { get; set; }
 
-        private TourManager _tourManager { get; set; }
+        private ITourManager _tourManager { get; set; }
 
         private ITourExportService _tourExportService { get; set; }
 
         public ITourImportService _tourImportService { get; set; }
 
         private readonly MapView _mapViewControl;
-        public TourListViewModel(TourManager tourManager,ITourExportService exportService,ITourImportService importService, MapView mapViewControl)
+        public TourListViewModel(ITourManager tourManager,ITourExportService exportService,ITourImportService importService, MapView mapViewControl)
         {
             _mapViewControl = mapViewControl;
             _tourManager = tourManager;
@@ -198,7 +198,18 @@ namespace tour_planner.ViewModel
 
         private void OpenAddTour(object obj)
         {
-            TourModel newTour = new TourModel(Guid.NewGuid(), "Name", "DD.MM.YYYY", 0f, 0f, "", "", "", "", "",new());
+            TourModel newTour = new TourModel()
+                .WithId(Guid.NewGuid())
+                .WithName("Name")
+                .WithDate("DD.MM.YYYY")
+                .WithDuration(0f)
+                .WithDistance(0f)
+                .WithImagePath("")
+                .WithDescription("")
+                .WithFrom("")
+                .WithTo("")
+                .WithTransportType("")
+                .WithTourLogs(new ObservableCollection<TourLogsModel>());
             var dialog = new AddTourView()
             {
                 DataContext = new AddTourViewModel(newTour, _tourManager, _mapViewControl)
@@ -237,7 +248,7 @@ namespace tour_planner.ViewModel
 
 
 
-        private async void LoadTours()
+        internal async Task LoadTours()
         {
 
             var tours = await _tourManager.getTours();
@@ -262,7 +273,7 @@ namespace tour_planner.ViewModel
             }
         }
 
-        private bool TourFilter(object item)
+        internal bool TourFilter(object item)
         {
             if (item is not TourModel tour) return false;
             if (string.IsNullOrWhiteSpace(SearchText)) return true;

@@ -12,7 +12,7 @@ using TourPlanner.Domain;
 namespace TourPlanner.BL.OpenRouteServiceAPI
 {
 
-    public class RouteRequest
+    public class RouteRequest : IRouteRequest
     {
 
 
@@ -29,7 +29,7 @@ namespace TourPlanner.BL.OpenRouteServiceAPI
         public bool Instructions { get; set; }
     }
 
-    public class OpenRouteServiceClient
+    public class OpenRouteServiceClient : IOpenRouteServiceClient
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(RouteRequest));
 
@@ -46,7 +46,7 @@ namespace TourPlanner.BL.OpenRouteServiceAPI
         private OpenRouteServiceClient()
         {
             sharedClient.BaseAddress = new Uri(_url);
-      
+
             sharedClient.DefaultRequestHeaders.Add("Accept", "application/json");
             Debug.WriteLine(AppSettingsManager.GetSetting("openroute_key"));
             sharedClient.DefaultRequestHeaders.Add("Authorization", AppSettingsManager.GetSetting("openroute_key"));
@@ -79,11 +79,11 @@ namespace TourPlanner.BL.OpenRouteServiceAPI
 
                 if (fromCoords == null || toCoords == null)
                 {
-                    if(fromCoords == null)
+                    if (fromCoords == null)
                     {
                         log.Error($"From Coordinates for {tour.From} are null");
                     }
-                    if(toCoords == null)
+                    if (toCoords == null)
                     {
                         log.Error($"To Coordinates for {tour.To} are null");
 
@@ -129,7 +129,7 @@ namespace TourPlanner.BL.OpenRouteServiceAPI
             catch (HttpRequestException ex)
             {
                 log.Error($"API {_url} not available.");
-                throw new Exception("Route Service is down (contact admin): " + ex.Message, ex); 
+                throw new Exception("Route Service is down (contact admin): " + ex.Message, ex);
             }
             catch (Exception ex)
             {

@@ -4,10 +4,10 @@ using TourPlanner.Domain;
 
 namespace tour_planner.Model
 {
-    public class TourManager
+    public class TourManager : ITourManager
     {
         public static ObservableCollection<TourModel> _DatabaseRoute = new ObservableCollection<TourModel>();
-      
+
         public CreateTourQuery _createTourQuery;
         public DeleteTourQuery _deleteTourQuery;
         public UpdateTourQuery _updateTourQuery;
@@ -49,8 +49,8 @@ namespace tour_planner.Model
         public async void DeleteTour(Guid id)
         {
             await _deleteTourQuery.Execute(id);
-          /*  TourModel x = _DatabaseRoute.Select(c => c.Id = id);
-            _DatabaseRoute.Remove(x);*/
+            /*  TourModel x = _DatabaseRoute.Select(c => c.Id = id);
+              _DatabaseRoute.Remove(x);*/
         }
     }
 }
