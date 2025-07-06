@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>tour_planner</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="TourPlanner.Tests" />
+	</ItemGroup>
+	
+  <ItemGroup>
+    <None Remove="map.html" />
+    <None Remove="Ressources\maximize.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="map.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GMap.NET.WinPresentation" Version="2.1.7" />
+    <PackageReference Include="log4net" Version="3.1.0" />
+    <PackageReference Include="log4net.Ext.Json" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3344-prerelease" />
+    <PackageReference Include="SVGImage" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TourPlanner.BL\TourPlanner.BL.csproj" />
+    <ProjectReference Include="..\TourPlanner.DAL\TourPlanner.DAL.csproj" />
+    <ProjectReference Include="..\TourPlanner.Domain\TourPlanner.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Ressources\maximize.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

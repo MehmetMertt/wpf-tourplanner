@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Route Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 5); // Centered on Europe
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        let routeLayer;
+
+        async function showRoute(fromCity, toCity) {
+            // Geocode cities to coordinates using Nominatim (OpenStreetMap)
+            const geocode = async (city) => {
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`);
+                const data = await res.json();
+                return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+            };
+
+            const fromCoords = await geocode(fromCity);
+            const toCoords = await geocode(toCity);
+
+            // Call OpenRouteService for routing
+            const res = await fetch('https://api.openrouteservice.org/v2/directions/driving-car/geojson', {
+                method: 'POST',
+                headers: {
+                    'Authorization': '5b3ce3597851110001cf6248e95c9cca9e1547b29b90b495753a9533',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    coordinates: [[fromCoords[1], fromCoords[0]], [toCoords[1], toCoords[0]]]
+                })
+            });
+
+            const geojson = await res.json();
+
+            if (routeLayer) {
+                map.removeLayer(routeLayer);
+            }
+
+            routeLayer = L.geoJSON(geojson, {
+                style: { color: 'blue', weight: 5 }
+            }).addTo(map);
+
+            map.fitBounds(routeLayer.getBounds());
+        }
+
+        function resetMap() {
+            if (routeLayer) {
+                map.removeLayer(routeLayer);
+            }
+            map.setView([51.505, -0.09], 5);
+            return "Map has been reset.";
+        }
+
+        function showRouteFromCSharp(from, to) {
+            console.log("Received cities:", from, to);
+            showRoute(from,to)
+
+            return "Route initiated"; // Return something to C#
+        }
+    </script>
+</body>
+</html>

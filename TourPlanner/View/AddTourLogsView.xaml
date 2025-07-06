@@ -1,0 +1,206 @@
+﻿<Window
+    x:Class="tour_planner.View.AddTourLogsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:tour_planner.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="400"
+    Height="300"
+    MinWidth="400"
+    MinHeight="250"
+    Style="{StaticResource CustomWindowStyle}"
+    mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="0"
+            CornerRadius="20"
+            GlassFrameThickness="0"
+            ResizeBorderThickness="4" />
+    </WindowChrome.WindowChrome>
+    <StackPanel VerticalAlignment="Center">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,0,0,10"
+                HorizontalAlignment="Center"
+                FontSize="24"
+                FontWeight="Bold"
+                Foreground="White"
+                Text="Logs Details" />
+
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Foreground="White"
+                Text="Date (DD.MM.YYYY):" />
+            <TextBox
+                Grid.Row="2"
+                Grid.Column="1"
+                IsEnabled="{Binding IsActionEnabled}"
+                Text="{Binding EditableTourLog.DateString, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                                <Setter Property="BorderBrush" Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                Foreground="White"
+                Text="Duration:" />
+            <TextBox
+                Grid.Row="3"
+                Grid.Column="1"
+                IsEnabled="{Binding IsActionEnabled}"
+                Text="{Binding EditableTourLog.DurationString, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                                <Setter Property="BorderBrush" Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                Foreground="White"
+                Text="Distance:" />
+            <TextBox
+                Grid.Row="4"
+                Grid.Column="1"
+                IsEnabled="{Binding IsActionEnabled}"
+                Text="{Binding EditableTourLog.DistanceString, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                                <Setter Property="BorderBrush" Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="0"
+                Foreground="White"
+                Text="Comment:" />
+            <TextBox
+                Grid.Row="5"
+                Grid.Column="1"
+                IsEnabled="{Binding IsActionEnabled}"
+                Text="{Binding EditableTourLog.Comment, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                                <Setter Property="BorderBrush" Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+
+            <TextBlock
+                Grid.Row="6"
+                Grid.Column="0"
+                Foreground="White"
+                Text="Difficulty:" />
+            <TextBox
+                Grid.Row="6"
+                Grid.Column="1"
+                IsEnabled="{Binding IsActionEnabled}"
+                Text="{Binding EditableTourLog.Difficulty, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                                <Setter Property="BorderBrush" Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+
+            <TextBlock
+                Grid.Row="7"
+                Grid.Column="0"
+                Foreground="White"
+                Text="Rating (1-5):" />
+            <TextBox
+                Grid.Row="7"
+                Grid.Column="1"
+                IsEnabled="{Binding IsActionEnabled}"
+                Text="{Binding EditableTourLog.Rating, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                                <Setter Property="BorderBrush" Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+
+        </Grid>
+
+        <StackPanel
+            Margin="0,10,0,0"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Button
+                Margin="0,0,10,0"
+                Command="{Binding SaveCommandLog}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                Content="Save"
+                IsEnabled="{Binding IsActionEnabled}"
+                Style="{StaticResource DarkThemeButton}" />
+
+            <Button
+                Command="{Binding CancelCommandLog}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                Content="Cancel"
+                Style="{StaticResource DarkThemeButton}" />
+        </StackPanel>
+    </StackPanel>
+
+</Window>
