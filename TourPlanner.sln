@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlanner.Presentation", "wpf-tourplanner\TourPlanner.Presentation.csproj", "{70B57BD4-FC02-4FA6-838F-813E584F6B82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlanner.Presentation", "TourPlanner\TourPlanner.Presentation.csproj", "{70B57BD4-FC02-4FA6-838F-813E584F6B82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlanner.Tests", "wpf-tourplanner.test\TourPlanner.Tests.csproj", "{C4AE5746-FE2E-4369-8365-2343DE6BBAE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlanner.Tests", "TourPlanner.test\TourPlanner.Tests.csproj", "{C4AE5746-FE2E-4369-8365-2343DE6BBAE5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlanner.DAL", "TourPlanner.DAL\TourPlanner.DAL.csproj", "{64EC9905-278D-4B96-8E8D-526B829222ED}"
 EndProject

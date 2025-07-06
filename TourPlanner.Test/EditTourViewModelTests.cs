@@ -1,9 +1,9 @@
 ﻿using Moq;
+using TourPlanner.Model;
+using TourPlanner.Domain;
 using tour_planner.Model;
 using tour_planner.View;
 using tour_planner.ViewModel;
-using TourPlanner.Domain;
-using TourPlanner.Model;
 
 
 namespace TourPlanner.Tests

@@ -1,10 +1,10 @@
 ﻿using Moq;
 using NUnit.Framework;
 using System;
-using tour_planner.Model;
 using tour_planner.ViewModel;
 using TourPlanner.Domain;
 using TourPlanner.Model;
+
 
 namespace TourPlanner.Tests
 {
